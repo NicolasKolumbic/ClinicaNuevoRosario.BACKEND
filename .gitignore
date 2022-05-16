@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+.vs/
+ClinicaNuevoRosario/ClinicaNuevoRosario.API/obj
+ClinicaNuevoRosario/ClinicaNuevoRosario.Application/obj
+ClinicaNuevoRosario/ClinicaNuevoRosario.Infrastructure/obj
+ClinicaNuevoRosario/ClinicaNuevoRosario.Domain/obj
