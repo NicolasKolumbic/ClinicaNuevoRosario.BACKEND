@@ -108,3 +108,10 @@ ClinicaNuevoRosario/ClinicaNuevoRosario.API/obj
 ClinicaNuevoRosario/ClinicaNuevoRosario.Application/obj
 ClinicaNuevoRosario/ClinicaNuevoRosario.Infrastructure/obj
 ClinicaNuevoRosario/ClinicaNuevoRosario.Domain/obj
+ClinicaNuevoRosario/ClinicaNuevoRosario.Identity/obj
+
+ClinicaNuevoRosario/ClinicaNuevoRosario.API/bin
+ClinicaNuevoRosario/ClinicaNuevoRosario.Application/bin
+ClinicaNuevoRosario/ClinicaNuevoRosario.Infrastructure/bin
+ClinicaNuevoRosario/ClinicaNuevoRosario.Domain/bin
+ClinicaNuevoRosario/ClinicaNuevoRosario.Identity/bin

@@ -15,4 +15,12 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Users\Commands\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ClinicaNuevoRosario.Domain\ClinicaNuevoRosario.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

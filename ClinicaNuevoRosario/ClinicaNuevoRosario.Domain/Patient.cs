@@ -1,6 +1,6 @@
 ﻿namespace ClinicaNuevoRosario.Domain
 {
-    public class User
+    public class Patient: Person
     {
     }
 }

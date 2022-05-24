@@ -7,7 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ClinicaNuevoRosario.Application\ClinicaNuevoRosario.Application.csproj" />
+    <ProjectReference Include="..\ClinicaNuevoRosario.Identity\ClinicaNuevoRosario.Identity.csproj" />
+    <ProjectReference Include="..\ClinicaNuevoRosario.Infrastructure\ClinicaNuevoRosario.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -15,13 +15,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{D7FF1C2A-FE64-4BA8-8A3D-F222E3EA1DC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClinicaNuevoRosario.API", "ClinicaNuevoRosario.API\ClinicaNuevoRosario.API.csproj", "{577B355F-AA22-4BAB-BE07-27A3642A8161}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClinicaNuevoRosario.API", "ClinicaNuevoRosario.API\ClinicaNuevoRosario.API.csproj", "{577B355F-AA22-4BAB-BE07-27A3642A8161}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClinicaNuevoRosario.Application", "ClinicaNuevoRosario.Application\ClinicaNuevoRosario.Application.csproj", "{FAFB6DE5-4891-4EB3-AA34-1A1D33161B7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClinicaNuevoRosario.Application", "ClinicaNuevoRosario.Application\ClinicaNuevoRosario.Application.csproj", "{FAFB6DE5-4891-4EB3-AA34-1A1D33161B7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClinicaNuevoRosario.Domain", "ClinicaNuevoRosario.Domain\ClinicaNuevoRosario.Domain.csproj", "{3DEEC6FB-AFD7-4AF4-962C-6CB3D9268D7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClinicaNuevoRosario.Domain", "ClinicaNuevoRosario.Domain\ClinicaNuevoRosario.Domain.csproj", "{3DEEC6FB-AFD7-4AF4-962C-6CB3D9268D7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClinicaNuevoRosario.Infrastructure", "ClinicaNuevoRosario.Infrastructure\ClinicaNuevoRosario.Infrastructure.csproj", "{41587DF8-860A-4CD8-BA4F-41481A4B68EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClinicaNuevoRosario.Infrastructure", "ClinicaNuevoRosario.Infrastructure\ClinicaNuevoRosario.Infrastructure.csproj", "{41587DF8-860A-4CD8-BA4F-41481A4B68EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClinicaNuevoRosario.Identity", "ClinicaNuevoRosario.Identity\ClinicaNuevoRosario.Identity.csproj", "{B03DA0D1-D5D4-42A2-ADE4-7C9606B92526}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{41587DF8-860A-4CD8-BA4F-41481A4B68EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41587DF8-860A-4CD8-BA4F-41481A4B68EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41587DF8-860A-4CD8-BA4F-41481A4B68EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B03DA0D1-D5D4-42A2-ADE4-7C9606B92526}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B03DA0D1-D5D4-42A2-ADE4-7C9606B92526}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B03DA0D1-D5D4-42A2-ADE4-7C9606B92526}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B03DA0D1-D5D4-42A2-ADE4-7C9606B92526}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{FAFB6DE5-4891-4EB3-AA34-1A1D33161B7E} = {D7FF1C2A-FE64-4BA8-8A3D-F222E3EA1DC5}
 		{3DEEC6FB-AFD7-4AF4-962C-6CB3D9268D7F} = {D7FF1C2A-FE64-4BA8-8A3D-F222E3EA1DC5}
 		{41587DF8-860A-4CD8-BA4F-41481A4B68EA} = {89DC4617-A392-4B77-BA06-5DE861582A06}
+		{B03DA0D1-D5D4-42A2-ADE4-7C9606B92526} = {89DC4617-A392-4B77-BA06-5DE861582A06}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EE3ACAE4-74B1-41C3-9586-3F0B37A35C53}

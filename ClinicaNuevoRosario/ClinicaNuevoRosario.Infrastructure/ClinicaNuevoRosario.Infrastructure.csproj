@@ -12,6 +12,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="SendGrid" Version="9.28.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ClinicaNuevoRosario.Application\ClinicaNuevoRosario.Application.csproj" />
+    <ProjectReference Include="..\ClinicaNuevoRosario.Domain\ClinicaNuevoRosario.Domain.csproj" />
   </ItemGroup>
 
 </Project>
