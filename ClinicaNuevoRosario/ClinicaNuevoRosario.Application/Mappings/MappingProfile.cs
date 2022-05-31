@@ -12,7 +12,9 @@ namespace ClinicaNuevoRosario.Application.Mappings
     {
         public MappingProfile()
         {
-            CreateMap<Doctor, DoctorViewModel>().ForMember(f => f.DoctorId, s => s.MapFrom(sx => sx.Id));
+            CreateMap<Doctor, DoctorViewModel>()
+                .ForMember(f => f.DoctorId, s => s.MapFrom(sx => sx.Id))
+                .ForMember(f => f.PhoneNumber, s => s.MapFrom(xs => (double)xs.PhoneNumber));
             CreateMap<AddDoctorCommand, Doctor>();
             CreateMap<UpdateDoctorCommand, Doctor>().ForMember(f => f.Id, s => s.MapFrom(sx => sx.DoctorId));
             CreateMap<Appointment, AppointmentModel>();
