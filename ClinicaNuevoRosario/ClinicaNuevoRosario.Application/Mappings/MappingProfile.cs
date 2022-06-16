@@ -20,6 +20,7 @@ namespace ClinicaNuevoRosario.Application.Mappings
             CreateMap<Appointment, AppointmentModel>();
             CreateMap<AddAppointmentCommand, Appointment>();
             CreateMap<UpdateAppointmentCommand, Appointment>();
+            CreateMap<MedicalSpecialty, MedicalSpeacialityResponse>();
 
         }
     }
