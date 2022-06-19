@@ -23,6 +23,7 @@ namespace ClinicaNuevoRosario.Infrastructure
             services.AddTransient<IEmailService, EmailService>();
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+            services.AddScoped<IMedicalSpecialitiesRepository, MedicalSpecialitiesRepository>();
 
             return services;
         }

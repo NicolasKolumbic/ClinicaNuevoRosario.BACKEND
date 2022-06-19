@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using ClinicaNuevoRosario.Domain.Common;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClinicaNuevoRosario.Domain
 {
-    public class MedicalSpecialty
+    public class MedicalSpecialty: BaseDomainModel
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

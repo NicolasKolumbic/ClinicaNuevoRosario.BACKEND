@@ -2,6 +2,7 @@
 using ClinicaNuevoRosario.Application.Features.Doctors.Commands.DeleteDoctor;
 using ClinicaNuevoRosario.Application.Features.Doctors.Commands.UpdateDoctor;
 using ClinicaNuevoRosario.Application.Features.Doctors.Queries.GetAllDoctors;
+using ClinicaNuevoRosario.Application.Features.Doctors.Queries.GetAllMedicalSpecialities;
 using ClinicaNuevoRosario.Application.Features.Doctors.Queries.SearchDoctors;
 using ClinicaNuevoRosario.Application.Models.Doctors;
 using MediatR;
@@ -58,6 +59,14 @@ namespace ClinicaNuevoRosario.API.Controllers
         public async Task<ActionResult<int>> DeleteDoctor([FromBody] DeleteDoctorCommand command)
         {
             return await _mediator.Send(command);
+        }
+
+        [HttpGet(Name = "AllMedicalSpecial")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult<List<MedicalSpeacialityResponse>>> AllMedicalSpecial()
+        {
+            var query = new GetAllMedicalSpecialitiesQuery();
+            return await _mediator.Send(query);
         }
     }
 }
