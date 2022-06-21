@@ -3,7 +3,9 @@ using ClinicaNuevoRosario.Application.Features.Doctors.Commands.DeleteDoctor;
 using ClinicaNuevoRosario.Application.Features.Doctors.Commands.UpdateDoctor;
 using ClinicaNuevoRosario.Application.Features.Doctors.Queries.GetAllDoctors;
 using ClinicaNuevoRosario.Application.Features.Doctors.Queries.GetAllMedicalSpecialities;
+using ClinicaNuevoRosario.Application.Features.Doctors.Queries.GetDoctorsByMedicalSpeciality;
 using ClinicaNuevoRosario.Application.Features.Doctors.Queries.SearchDoctors;
+using ClinicaNuevoRosario.Application.Features.Doctors.Queries.SearchMedicalSpeciality;
 using ClinicaNuevoRosario.Application.Models.Doctors;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
@@ -66,6 +68,23 @@ namespace ClinicaNuevoRosario.API.Controllers
         public async Task<ActionResult<List<MedicalSpeacialityResponse>>> AllMedicalSpecial()
         {
             var query = new GetAllMedicalSpecialitiesQuery();
+            return await _mediator.Send(query);
+        }
+
+
+        [HttpGet(Name = "SearchMedicalSpecial")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult<List<MedicalSpeacialityResponse>>> SearchMedicalSpecial(string text)
+        {
+            var query = new SearchMedicalSpecialityQuery() { Text = text};
+            return await _mediator.Send(query);
+        }
+
+        [HttpGet(Name = "GetDoctorsByMedicalSpeciality")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult<List<DoctorViewModel>>> GetDoctorsByMedicalSpeciality(int medicalSpecialityId)
+        {
+            var query = new GetDoctorsByMedicalSpecialityQuery() { MedicalSpecialityId = medicalSpecialityId };
             return await _mediator.Send(query);
         }
     }

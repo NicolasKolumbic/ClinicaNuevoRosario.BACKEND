@@ -9,5 +9,16 @@ namespace ClinicaNuevoRosario.Infrastructure.Repositories
         public MedicalSpecialitiesRepository(CNRDBContext context) : base(context)
         {
         }
+
+        public Task<IQueryable<MedicalSpecialty>> GetByName(string name)
+        {
+            var medicalSpecialties = this._context.MedicalSpecialties;
+
+            var result = (from d in medicalSpecialties
+                          where d.Name.Contains(name)
+                          select d);
+
+            return Task.FromResult(result);
+        }
     }
 }

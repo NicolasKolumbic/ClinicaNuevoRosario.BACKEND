@@ -4,6 +4,7 @@ using ClinicaNuevoRosario.Application.Features.Appointments.Commands.UpdateAppoi
 using ClinicaNuevoRosario.Application.Features.Doctors.Commands.AddDoctor;
 using ClinicaNuevoRosario.Application.Features.Doctors.Commands.UpdateDoctor;
 using ClinicaNuevoRosario.Application.Models.Doctors;
+using ClinicaNuevoRosario.Application.Models.Pantients;
 using ClinicaNuevoRosario.Domain;
 
 namespace ClinicaNuevoRosario.Application.Mappings
@@ -21,6 +22,15 @@ namespace ClinicaNuevoRosario.Application.Mappings
             CreateMap<AddAppointmentCommand, Appointment>();
             CreateMap<UpdateAppointmentCommand, Appointment>();
             CreateMap<MedicalSpecialty, MedicalSpeacialityResponse>();
+            CreateMap<DoctorMedicalSpecialty, DoctorViewModel>()
+                .ForMember(f => f.MedicalSpeciality, s => s.MapFrom(sx => sx.MedicalSpecialty))
+                .ForMember(f => f.Email, s => s.MapFrom(sx => sx.Doctor.Email))
+                .ForMember(f => f.Lastname, s => s.MapFrom(sx => sx.Doctor.Lastname))
+                .ForMember(f => f.MedicalLicense, s => s.MapFrom(sx => sx.Doctor.MedicalLicense))
+                .ForMember(f => f.Name, s => s.MapFrom(sx => sx.Doctor.Name))
+                .ForMember(f => f.PhoneNumber, s => s.MapFrom(sx => sx.Doctor.PhoneNumber))
+                .ForMember(f => f.DoctorId, s => s.MapFrom(sx => sx.DoctorId));
+            CreateMap<Patient, PantientResponse>();
 
         }
     }
