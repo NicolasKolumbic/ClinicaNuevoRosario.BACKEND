@@ -1,6 +1,7 @@
 ﻿using ClinicaNuevoRosario.Application.Contracts.Persistence;
 using ClinicaNuevoRosario.Domain;
 using ClinicaNuevoRosario.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicaNuevoRosario.Infrastructure.Repositories
 {
@@ -10,15 +11,28 @@ namespace ClinicaNuevoRosario.Infrastructure.Repositories
         {
         }
 
-        public Task<IQueryable<Doctor>> GetByName(string name)
+        public async Task<IQueryable<DoctorMedicalSpecialty>> GetByMedicalSpeciality(int medicalSpecialityId)
         {
-            var doctors = this._context.Doctors;
+            var doctorMedicalSpecialities =  this._context.DoctorMedicalSpecialties
+                                       .Include(m => m.Doctor)
+                                       .Include(dms => dms.MedicalSpecialty)
+                                       .Where(x => x.MedicalSpecialtyId == medicalSpecialityId)
+                                       .Select(x => x);
 
-            var result = (from d in doctors
-                         where d.Name.Contains(name) || d.Lastname.Contains(name)
-                         select d);
+            return doctorMedicalSpecialities;
+        }
 
-            return Task.FromResult(result);
+        public async Task<IQueryable<DoctorMedicalSpecialty>> GetByName(string name)
+        {
+            var doctorMedicalSpecialities = this._context.DoctorMedicalSpecialties
+                                                         .Include(dms => dms.MedicalSpecialty)
+                                                         .Include(dms => dms.Doctor);
+
+            var result = (from dms in doctorMedicalSpecialities
+                          where dms.Doctor.Name.Contains(name) || dms.Doctor.Lastname.Contains(name)
+                         select dms);
+
+            return result;
         }
     }
 }

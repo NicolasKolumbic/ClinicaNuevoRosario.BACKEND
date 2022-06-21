@@ -8,5 +8,7 @@
         public string Lastname { get; set; }
         public string Email { get; set; }
         public double PhoneNumber { get; set; }
+
+        public MedicalSpeacialityResponse? MedicalSpeciality { get; set; }
     }
 }
