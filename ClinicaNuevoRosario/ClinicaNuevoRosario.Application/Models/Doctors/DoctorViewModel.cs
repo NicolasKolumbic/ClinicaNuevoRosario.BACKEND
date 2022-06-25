@@ -9,6 +9,6 @@
         public string Email { get; set; }
         public double PhoneNumber { get; set; }
 
-        public MedicalSpeacialityResponse? MedicalSpeciality { get; set; }
+        public MedicalSpecialtyDto? MedicalSpeciality { get; set; }
     }
 }

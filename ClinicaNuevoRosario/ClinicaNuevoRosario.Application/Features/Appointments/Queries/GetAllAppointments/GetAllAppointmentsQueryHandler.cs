@@ -5,7 +5,7 @@ using MediatR;
 
 namespace ClinicaNuevoRosario.Application.Features.Appointments.Queries.GetAllAppointments
 {
-    public class GetAllAppointmentsQueryHandler : IRequestHandler<GetAllAppointmentsQuery, List<AppointmentModel>>
+    public class GetAllAppointmentsQueryHandler : IRequestHandler<GetAllAppointmentsQuery, List<AppointmentDto>>
     {
 
         private readonly IMapper _mapper;
@@ -17,10 +17,10 @@ namespace ClinicaNuevoRosario.Application.Features.Appointments.Queries.GetAllAp
             _appointmentRepository = appointmentRepository;
         }
 
-        public async Task<List<AppointmentModel>> Handle(GetAllAppointmentsQuery request, CancellationToken cancellationToken)
+        public async Task<List<AppointmentDto>> Handle(GetAllAppointmentsQuery request, CancellationToken cancellationToken)
         {
             var appointmentsDb = await _appointmentRepository.GetAllApointments();
-            var appointments = _mapper.Map<List<AppointmentModel>>(appointmentsDb.ToList());
+            var appointments = _mapper.Map<List<AppointmentDto>>(appointmentsDb.ToList());
             return appointments;
         }
     }

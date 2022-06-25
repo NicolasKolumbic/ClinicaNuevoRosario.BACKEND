@@ -13,7 +13,7 @@ namespace ClinicaNuevoRosario.Domain
 
         public int PatientId { get; set; }
         public bool IsActive { get; set; } = true;
-        public string Comments { get; set; } = string.Empty;
+        public string? Comments { get; set; } = string.Empty;
         public virtual Doctor Doctor { get; set; }
         public virtual Patient Patient { get; set; }
         public virtual HealthInsurance? HealthInsurance { get; set; }

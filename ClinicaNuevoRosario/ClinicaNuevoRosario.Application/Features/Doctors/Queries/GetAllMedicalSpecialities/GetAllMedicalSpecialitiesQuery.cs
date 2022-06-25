@@ -3,7 +3,7 @@ using MediatR;
 
 namespace ClinicaNuevoRosario.Application.Features.Doctors.Queries.GetAllMedicalSpecialities
 {
-    public class GetAllMedicalSpecialitiesQuery: IRequest<List<MedicalSpeacialityResponse>>
+    public class GetAllMedicalSpecialitiesQuery: IRequest<List<MedicalSpecialtyDto>>
     {
     }
 }

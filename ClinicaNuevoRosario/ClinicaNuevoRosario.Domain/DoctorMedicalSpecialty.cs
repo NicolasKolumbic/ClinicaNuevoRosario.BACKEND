@@ -1,14 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ClinicaNuevoRosario.Domain.Common;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClinicaNuevoRosario.Domain
 {
-    [Keyless]
-    public class DoctorMedicalSpecialty
+
+    public class DoctorMedicalSpecialty : BaseDomainModel
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         public int DoctorId { get; set; }
         public int MedicalSpecialtyId { get; set; }
 
-        public virtual Doctor Doctor { get; set; }
-        public virtual MedicalSpecialty MedicalSpecialty { get; set; }
+        public MedicalSpecialty MedicalSpecialty { get; set; }
+
     }
 }
