@@ -2,13 +2,16 @@
 using ClinicaNuevoRosario.Application.Features.Appointments.Commands.DeleteAppointment;
 using ClinicaNuevoRosario.Application.Features.Appointments.Commands.UpdateAppointment;
 using ClinicaNuevoRosario.Application.Features.Appointments.Queries.GetAllAppointments;
+using ClinicaNuevoRosario.Application.Features.Appointments.Queries.GetAppointmentsByDoctor;
 using ClinicaNuevoRosario.Application.Models.Doctors;
 using MediatR;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace ClinicaNuevoRosario.API.Controllers
 {
+    [EnableCors("MyPolicy")]
     [ApiController]
     [Route("api/v1/[controller]/[action]")]
     public class AppointmentController : ControllerBase
@@ -22,7 +25,7 @@ namespace ClinicaNuevoRosario.API.Controllers
 
         [HttpPost(Name = "AllAppointments")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult<List<AppointmentModel>>> GetAppointments()
+        public async Task<ActionResult<List<AppointmentDto>>> GetAppointments()
         {
             var query = new GetAllAppointmentsQuery();
             return await _mediator.Send(query);
@@ -49,5 +52,14 @@ namespace ClinicaNuevoRosario.API.Controllers
             return await _mediator.Send(command);
         }
 
+        [HttpGet(Name = "GetAppointmentsByDoctorId")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult<List<AppointmentDto>>> GetAppointmentsByDoctorId(int doctorId)
+        {
+            var query = new GetAppointmentsByDoctorQuery() { DoctorId = doctorId};
+            return await _mediator.Send(query);
+        }
+
     }
 }
+

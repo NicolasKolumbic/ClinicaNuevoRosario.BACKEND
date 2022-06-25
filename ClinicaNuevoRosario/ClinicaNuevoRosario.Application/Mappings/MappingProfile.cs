@@ -18,19 +18,18 @@ namespace ClinicaNuevoRosario.Application.Mappings
                 .ForMember(f => f.PhoneNumber, s => s.MapFrom(xs => (double)xs.PhoneNumber));
             CreateMap<AddDoctorCommand, Doctor>();
             CreateMap<UpdateDoctorCommand, Doctor>().ForMember(f => f.Id, s => s.MapFrom(sx => sx.DoctorId));
-            CreateMap<Appointment, AppointmentModel>();
-            CreateMap<AddAppointmentCommand, Appointment>();
-            CreateMap<UpdateAppointmentCommand, Appointment>();
-            CreateMap<MedicalSpecialty, MedicalSpeacialityResponse>();
-            CreateMap<DoctorMedicalSpecialty, DoctorViewModel>()
-                .ForMember(f => f.MedicalSpeciality, s => s.MapFrom(sx => sx.MedicalSpecialty))
-                .ForMember(f => f.Email, s => s.MapFrom(sx => sx.Doctor.Email))
-                .ForMember(f => f.Lastname, s => s.MapFrom(sx => sx.Doctor.Lastname))
-                .ForMember(f => f.MedicalLicense, s => s.MapFrom(sx => sx.Doctor.MedicalLicense))
-                .ForMember(f => f.Name, s => s.MapFrom(sx => sx.Doctor.Name))
-                .ForMember(f => f.PhoneNumber, s => s.MapFrom(sx => sx.Doctor.PhoneNumber))
-                .ForMember(f => f.DoctorId, s => s.MapFrom(sx => sx.DoctorId));
+            CreateMap<Appointment, AppointmentDto>()
+                .ForMember(x => x.AppointmentId, x => x.MapFrom(s => s.Id));
+            CreateMap<AddAppointmentCommand, Domain.Appointment>();
+            CreateMap<UpdateAppointmentCommand, Domain.Appointment>();
             CreateMap<Patient, PantientResponse>();
+            CreateMap<Doctor, DoctorDto>()
+                .ForMember(x => x.DoctorId, x => x.MapFrom(s => s.Id))
+                .ForMember(x => x.MedicalSpecialties, x => x.MapFrom(s => s.DoctorMedicalSpecialties.Select(x => x.MedicalSpecialty)));
+            CreateMap<DoctorSchedule, DoctorScheduleDto>()
+                .ForMember(x => x.DoctorScheduleId, x => x.MapFrom(s => s.Id));
+            CreateMap<MedicalSpecialty, MedicalSpecialtyDto>()
+                .ForMember(x => x.MedicalSpecialtyId, x => x.MapFrom(s => s.Id));
 
         }
     }

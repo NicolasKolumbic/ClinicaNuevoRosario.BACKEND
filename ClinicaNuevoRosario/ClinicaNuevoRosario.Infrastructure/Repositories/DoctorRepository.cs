@@ -1,4 +1,5 @@
 ﻿using ClinicaNuevoRosario.Application.Contracts.Persistence;
+using ClinicaNuevoRosario.Application.Models.Doctors;
 using ClinicaNuevoRosario.Domain;
 using ClinicaNuevoRosario.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -11,28 +12,29 @@ namespace ClinicaNuevoRosario.Infrastructure.Repositories
         {
         }
 
-        public async Task<IQueryable<DoctorMedicalSpecialty>> GetByMedicalSpeciality(int medicalSpecialityId)
+        public async Task<IQueryable<Doctor>> GetByMedicalSpeciality(int medicalSpecialityId)
         {
-            var doctorMedicalSpecialities =  this._context.DoctorMedicalSpecialties
-                                       .Include(m => m.Doctor)
-                                       .Include(dms => dms.MedicalSpecialty)
-                                       .Where(x => x.MedicalSpecialtyId == medicalSpecialityId)
-                                       .Select(x => x);
+            var doctors = _context.Doctors
+                                .Include(x => x.DoctorSchedules)
+                                .Include(x => x.DoctorMedicalSpecialties)
+                                .ThenInclude(x => x.MedicalSpecialty)
+                                .Where(x => x.DoctorMedicalSpecialties.Any(sp => sp.MedicalSpecialtyId == medicalSpecialityId))
+                                .Select(x => x);
 
-            return doctorMedicalSpecialities;
+            return doctors;
         }
 
-        public async Task<IQueryable<DoctorMedicalSpecialty>> GetByName(string name)
+        public async Task<IQueryable<Doctor>> GetByName(string name)
         {
-            var doctorMedicalSpecialities = this._context.DoctorMedicalSpecialties
-                                                         .Include(dms => dms.MedicalSpecialty)
-                                                         .Include(dms => dms.Doctor);
+            var result = _context.Doctors
+                .Include(x => x.DoctorSchedules)
+                .Include(x => x.DoctorMedicalSpecialties)
+                .ThenInclude(x => x.MedicalSpecialty)
+                .Where(d => d.Name.Contains(name) || d.Lastname.Contains(name));
 
-            var result = (from dms in doctorMedicalSpecialities
-                          where dms.Doctor.Name.Contains(name) || dms.Doctor.Lastname.Contains(name)
-                         select dms);
 
             return result;
         }
+
     }
 }

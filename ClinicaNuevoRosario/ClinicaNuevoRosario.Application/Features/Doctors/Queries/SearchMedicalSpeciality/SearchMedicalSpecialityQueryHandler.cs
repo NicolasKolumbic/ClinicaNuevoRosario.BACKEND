@@ -5,7 +5,7 @@ using MediatR;
 
 namespace ClinicaNuevoRosario.Application.Features.Doctors.Queries.SearchMedicalSpeciality
 {
-    public class SearchMedicalSpecialityQueryHandler : IRequestHandler<SearchMedicalSpecialityQuery, List<MedicalSpeacialityResponse>>
+    public class SearchMedicalSpecialityQueryHandler : IRequestHandler<SearchMedicalSpecialityQuery, List<MedicalSpecialtyDto>>
     {
         private readonly IMedicalSpecialitiesRepository _medicalSpecialitiesRepository;
         private readonly IMapper _mapper;
@@ -16,10 +16,10 @@ namespace ClinicaNuevoRosario.Application.Features.Doctors.Queries.SearchMedical
             _mapper = mapper;
         }
 
-        public async Task<List<MedicalSpeacialityResponse>> Handle(SearchMedicalSpecialityQuery request, CancellationToken cancellationToken)
+        public async Task<List<MedicalSpecialtyDto>> Handle(SearchMedicalSpecialityQuery request, CancellationToken cancellationToken)
         {
             var medicalSpecialties = await _medicalSpecialitiesRepository.GetByName(request.Text);
-            var medicalSpeacialityResponses = _mapper.Map<List<MedicalSpeacialityResponse>>(medicalSpecialties.ToList());
+            var medicalSpeacialityResponses = _mapper.Map<List<MedicalSpecialtyDto>>(medicalSpecialties.ToList());
             return medicalSpeacialityResponses;
         }
     }

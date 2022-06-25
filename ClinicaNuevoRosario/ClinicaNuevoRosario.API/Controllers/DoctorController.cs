@@ -36,7 +36,7 @@ namespace ClinicaNuevoRosario.API.Controllers
 
         [HttpGet(Name = "SearchDoctor")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult<List<DoctorViewModel>>> SearchDoctor(string text)
+        public async Task<ActionResult<List<DoctorDto>>> SearchDoctor(string text)
         {
             var query = new SearchDoctorsQuery() { Text = text};
             return await _mediator.Send(query);
@@ -65,7 +65,7 @@ namespace ClinicaNuevoRosario.API.Controllers
 
         [HttpGet(Name = "AllMedicalSpecial")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult<List<MedicalSpeacialityResponse>>> AllMedicalSpecial()
+        public async Task<ActionResult<List<MedicalSpecialtyDto>>> AllMedicalSpecial()
         {
             var query = new GetAllMedicalSpecialitiesQuery();
             return await _mediator.Send(query);
@@ -74,7 +74,7 @@ namespace ClinicaNuevoRosario.API.Controllers
 
         [HttpGet(Name = "SearchMedicalSpecial")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult<List<MedicalSpeacialityResponse>>> SearchMedicalSpecial(string text)
+        public async Task<ActionResult<List<MedicalSpecialtyDto>>> SearchMedicalSpecial(string text)
         {
             var query = new SearchMedicalSpecialityQuery() { Text = text};
             return await _mediator.Send(query);
@@ -82,7 +82,7 @@ namespace ClinicaNuevoRosario.API.Controllers
 
         [HttpGet(Name = "GetDoctorsByMedicalSpeciality")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult<List<DoctorViewModel>>> GetDoctorsByMedicalSpeciality(int medicalSpecialityId)
+        public async Task<ActionResult<List<DoctorDto>>> GetDoctorsByMedicalSpeciality(int medicalSpecialityId)
         {
             var query = new GetDoctorsByMedicalSpecialityQuery() { MedicalSpecialityId = medicalSpecialityId };
             return await _mediator.Send(query);

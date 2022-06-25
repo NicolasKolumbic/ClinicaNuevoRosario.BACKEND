@@ -1,8 +1,8 @@
 ﻿namespace ClinicaNuevoRosario.Application.Models.Doctors
 {
-    public class MedicalSpeacialityResponse
+    public class MedicalSpecialtyDto
     {
-        public int Id { get; set; }
+        public int MedicalSpecialtyId { get; set; }
         public string Name { get; set; } = String.Empty;
     }
 }
