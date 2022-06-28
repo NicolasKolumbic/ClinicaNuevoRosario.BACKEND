@@ -4,6 +4,7 @@ using ClinicaNuevoRosario.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClinicaNuevoRosario.Infrastructure.Migrations
 {
     [DbContext(typeof(CNRDBContext))]
-    partial class CNRDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220626173614_UpdateHealthInsuranceTable")]
+    partial class UpdateHealthInsuranceTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -290,6 +292,10 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Plan")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
@@ -365,9 +371,6 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
                     b.Property<double>("PhoneNumber")
                         .HasColumnType("float");
 
-                    b.Property<int?>("PlanId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
@@ -377,44 +380,8 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("HealthInsuranceId");
-
-                    b.HasIndex("PlanId");
 
                     b.ToTable("Patients");
-                });
-
-            modelBuilder.Entity("ClinicaNuevoRosario.Domain.Plan", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("HealthInsuranceId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HealthInsuranceId");
-
-                    b.ToTable("Plan");
                 });
 
             modelBuilder.Entity("ClinicaNuevoRosario.Domain.Appointment", b =>
@@ -487,20 +454,7 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("HealthInsuranceId");
 
-                    b.HasOne("ClinicaNuevoRosario.Domain.Plan", "Plan")
-                        .WithMany()
-                        .HasForeignKey("PlanId");
-
                     b.Navigation("HealthInsurance");
-
-                    b.Navigation("Plan");
-                });
-
-            modelBuilder.Entity("ClinicaNuevoRosario.Domain.Plan", b =>
-                {
-                    b.HasOne("ClinicaNuevoRosario.Domain.HealthInsurance", null)
-                        .WithMany("Plans")
-                        .HasForeignKey("HealthInsuranceId");
                 });
 
             modelBuilder.Entity("ClinicaNuevoRosario.Domain.Doctor", b =>
@@ -508,11 +462,6 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
                     b.Navigation("DoctorMedicalSpecialties");
 
                     b.Navigation("DoctorSchedules");
-                });
-
-            modelBuilder.Entity("ClinicaNuevoRosario.Domain.HealthInsurance", b =>
-                {
-                    b.Navigation("Plans");
                 });
 #pragma warning restore 612, 618
         }

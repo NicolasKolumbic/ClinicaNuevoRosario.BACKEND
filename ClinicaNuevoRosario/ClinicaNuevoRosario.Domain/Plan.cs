@@ -3,15 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClinicaNuevoRosario.Domain
 {
-    public class HealthInsurance : BaseDomainModel
+    public class Plan: BaseDomainModel
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Name { get; set; } = String.Empty;
-        public bool IsActive { get; set; }
-
-        public ICollection<Plan> Plans { get; set; }
-
-
+        public string Name { get; set; }
     }
 }

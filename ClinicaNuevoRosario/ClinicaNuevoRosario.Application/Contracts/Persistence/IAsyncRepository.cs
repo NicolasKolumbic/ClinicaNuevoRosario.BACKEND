@@ -6,6 +6,8 @@ namespace ClinicaNuevoRosario.Application.Contracts.Persistence
     public interface IAsyncRepository<T> where T : BaseDomainModel
     {
         Task<IReadOnlyList<T>> GetAllAsync();
+
+        Task<IReadOnlyList<T>> GetAllAsync(string includeString = null);
         Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate);
 
         Task<IReadOnlyList<T>> GetAsync(

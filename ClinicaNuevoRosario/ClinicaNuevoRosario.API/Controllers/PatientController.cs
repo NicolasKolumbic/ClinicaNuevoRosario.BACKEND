@@ -1,4 +1,7 @@
-﻿using ClinicaNuevoRosario.Application.Features.Patients.Queries.SearchPatients;
+﻿using ClinicaNuevoRosario.Application.Features.HealthInsurance.Queries.GetAllHealthInsurances;
+using ClinicaNuevoRosario.Application.Features.Patients.Command.AddPatient;
+using ClinicaNuevoRosario.Application.Features.Patients.Queries.SearchPatients;
+using ClinicaNuevoRosario.Application.Models.Doctors;
 using ClinicaNuevoRosario.Application.Models.Pantients;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
@@ -21,10 +24,27 @@ namespace ClinicaNuevoRosario.API.Controllers
 
         [HttpGet(Name = "SearchPatient")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult<List<PantientResponse>>> SearchPatient(string text)
+        public async Task<ActionResult<List<PatientDto>>> SearchPatient(string text)
         {
             var query = new SearchPatientQuery() { Text = text };
             return await _mediator.Send(query);
+        }
+
+
+        [HttpGet(Name = "GetAllHealthInsurances")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult<List<HealthInsuranceDto>>> GetAllHealthInsurances()
+        {
+            var query = new GetAllHealthInsurancesQuery();
+            return await _mediator.Send(query);
+        }
+
+
+        [HttpPost(Name = "AddPatient")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult<int>> AddPatient([FromBody] AddPatientCommand command)
+        {
+            return await _mediator.Send(command);
         }
     }
 }

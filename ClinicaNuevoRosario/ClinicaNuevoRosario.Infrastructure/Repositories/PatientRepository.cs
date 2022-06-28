@@ -13,11 +13,10 @@ namespace ClinicaNuevoRosario.Infrastructure.Repositories
 
         public async Task<IQueryable<Patient>> GetByName(string name)
         {
-            var pantient = this._context.Patients;
-
-            var result = (from p in pantient
-                          where p.Name.Contains(name) || p.Lastname.Contains(name)
-                          select p);
+            var result = _context.Patients
+                .Include(p => p.HealthInsurance)
+                .Include(p => p.Plan)
+               .Where(d => d.Name.Contains(name) || d.Lastname.Contains(name));
 
             return result;
         }
