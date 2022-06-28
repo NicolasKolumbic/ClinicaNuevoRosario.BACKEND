@@ -32,6 +32,11 @@ namespace ClinicaNuevoRosario.Infrastructure.Repositories
             return await _context.Set<T>().ToListAsync();
         }
 
+        public async Task<IReadOnlyList<T>> GetAllAsync(string includeString = null)
+        {
+            return await _context.Set<T>().Include(includeString).ToListAsync();
+        }
+
         public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate)
         {
             return await _context.Set<T>().Where(predicate).ToListAsync();

@@ -29,7 +29,7 @@ namespace ClinicaNuevoRosario.Application.Features.Appointments.Commands.AddAppo
             var addedAppointment = await _appointmentRepository.AddAsync(appointmentEntity);
             _logger.LogInformation($"Doctor: {addedAppointment} fue creado correctamente");
 
-            await SendEmail(addedAppointment);
+            //await SendEmail(addedAppointment);
 
             return addedAppointment.Id;
         }
