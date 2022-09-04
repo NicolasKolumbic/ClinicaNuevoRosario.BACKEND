@@ -26,9 +26,9 @@ namespace ClinicaNuevoRosario.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost(Name = "AllDoctors")]
+        [HttpGet(Name = "AllDoctors")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult<List<DoctorViewModel>>> GetAllDoctors()
+        public async Task<ActionResult<List<DoctorDto>>> GetAllDoctors()
         {
             var query = new GetAllDoctorsQuery();
             return await _mediator.Send(query);
