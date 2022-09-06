@@ -12,6 +12,15 @@ namespace ClinicaNuevoRosario.Infrastructure.Repositories
         {
         }
 
+        public async Task<IQueryable<Doctor>> GetAll()
+        {
+            return _context.Doctors
+                    .Include(x => x.DoctorSchedules)
+                    .Include(x => x.DoctorMedicalSpecialties)
+                    .ThenInclude(x => x.MedicalSpecialty)
+                    .Select(x => x);
+        }
+
         public async Task<IQueryable<Doctor>> GetByMedicalSpeciality(int medicalSpecialityId)
         {
             var doctors = _context.Doctors

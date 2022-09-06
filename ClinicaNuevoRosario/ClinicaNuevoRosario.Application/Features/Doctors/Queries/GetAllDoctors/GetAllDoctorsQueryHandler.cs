@@ -5,7 +5,7 @@ using MediatR;
 
 namespace ClinicaNuevoRosario.Application.Features.Doctors.Queries.GetAllDoctors
 {
-    public class GetAllDoctorsQueryHandler : IRequestHandler<GetAllDoctorsQuery, List<DoctorViewModel>>
+    public class GetAllDoctorsQueryHandler : IRequestHandler<GetAllDoctorsQuery, List<DoctorDto>>
     {
         private readonly IDoctorRepository _doctorRepository;
         private readonly IMapper _mapper;
@@ -16,11 +16,10 @@ namespace ClinicaNuevoRosario.Application.Features.Doctors.Queries.GetAllDoctors
             _mapper = mapper;
         }
 
-        public async Task<List<DoctorViewModel>> Handle(GetAllDoctorsQuery request, CancellationToken cancellationToken)
+        public async Task<List<DoctorDto>> Handle(GetAllDoctorsQuery request, CancellationToken cancellationToken)
         {
-            var doctors = await _doctorRepository.GetAllAsync();
-            var doctorsViewModel = _mapper.Map<List<DoctorViewModel>>(doctors.ToList());
-            return doctorsViewModel;
+            var doctors = await _doctorRepository.GetAll();
+            return _mapper.Map<List<DoctorDto>>(doctors.ToList());
         }
     }
 }
