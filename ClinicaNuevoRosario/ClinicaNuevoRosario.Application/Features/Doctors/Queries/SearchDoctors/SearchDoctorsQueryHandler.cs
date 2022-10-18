@@ -18,9 +18,18 @@ namespace ClinicaNuevoRosario.Application.Features.Doctors.Queries.SearchDoctors
 
         public async Task<List<DoctorDto>> Handle(SearchDoctorsQuery request, CancellationToken cancellationToken)
         {
-            var doctors = await _doctorRepository.GetByName(request.Text);
-            var doctorsViewModel = _mapper.Map<List<DoctorDto>>(doctors.ToList());
-            return doctorsViewModel;
+            if(request.DoctorCriteria != null)
+            {
+                var doctors = await _doctorRepository.GetByName(request.DoctorCriteria);
+                return _mapper.Map<List<DoctorDto>>(doctors.ToList());
+            } else if(request.MedicalSpecialty != null || request.Plan != null)
+            {
+                var doctors = await _doctorRepository.GetByMedicalSpecialityOrHealthInsurance(request.MedicalSpecialty?.MedicalSpecialtyId, request.Plan?.Id);
+                return _mapper.Map<List<DoctorDto>>(doctors.ToList());
+            }
+            
+           
+            return new List<DoctorDto>();
         }
     }
 }

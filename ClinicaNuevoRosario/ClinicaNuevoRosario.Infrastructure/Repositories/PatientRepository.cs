@@ -14,7 +14,6 @@ namespace ClinicaNuevoRosario.Infrastructure.Repositories
         public async Task<IQueryable<Patient>> GetByName(string name)
         {
             var result = _context.Patients
-                .Include(p => p.HealthInsurance)
                 .Include(p => p.Plan)
                .Where(d => d.Name.Contains(name) || d.Lastname.Contains(name));
 

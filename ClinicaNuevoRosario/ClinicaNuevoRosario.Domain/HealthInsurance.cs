@@ -10,8 +10,5 @@ namespace ClinicaNuevoRosario.Domain
         public string Name { get; set; } = String.Empty;
         public bool IsActive { get; set; }
 
-        public ICollection<Plan> Plans { get; set; }
-
-
     }
 }
