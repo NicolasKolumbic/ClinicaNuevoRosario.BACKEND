@@ -1,25 +1,30 @@
 ﻿using ClinicaNuevoRosario.Domain;
 using ClinicaNuevoRosario.Domain.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.DependencyInjection;
+using System.IO;
 
 namespace ClinicaNuevoRosario.Infrastructure.Persistence
 {
     public class CNRDBContext : DbContext
     {
         public DbSet<Appointment> Appointments { get; set; }
-        public DbSet<ClinicRole> ClinicRoles { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
-        public DbSet<DoctorMedicalSpecialty> DoctorMedicalSpecialties { get; set; }
         public DbSet<DoctorSchedule> DoctorSchedules { get; set; }
-        public DbSet<Employee> Employees { get; set; }
         public DbSet<HealthInsurance> HealthInsurances { get; set; }
+
+        public DbSet<Plan> Plan { get; set; }
+
         public DbSet<MedicalSpecialty> MedicalSpecialties { get; set; }
         public DbSet<Patient> Patients { get; set; }
 
         public CNRDBContext(DbContextOptions<CNRDBContext> options): base(options)
         {
-                
+
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.LogTo(Console.WriteLine);
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

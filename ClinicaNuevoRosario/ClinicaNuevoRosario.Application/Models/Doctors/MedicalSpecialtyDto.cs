@@ -3,6 +3,7 @@
     public class MedicalSpecialtyDto
     {
         public int MedicalSpecialtyId { get; set; }
-        public string Name { get; set; } = String.Empty;
+        public string Name { get; set; }
+
     }
 }

@@ -13,6 +13,7 @@ namespace ClinicaNuevoRosario.Infrastructure.Repositories
         public RepositoryBase(CNRDBContext context)
         {
             this._context = context;
+
         }
         public async Task<T> AddAsync(T entity)
         {

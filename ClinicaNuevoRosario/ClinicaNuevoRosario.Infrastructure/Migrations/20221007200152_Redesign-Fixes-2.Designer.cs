@@ -4,6 +4,7 @@ using ClinicaNuevoRosario.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClinicaNuevoRosario.Infrastructure.Migrations
 {
     [DbContext(typeof(CNRDBContext))]
-    partial class CNRDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221007200152_Redesign-Fixes-2")]
+    partial class RedesignFixes2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,6 +44,12 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
+                    b.Property<int>("HealthInsuranceId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
@@ -57,6 +65,8 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DoctorId");
+
+                    b.HasIndex("HealthInsuranceId");
 
                     b.HasIndex("PatientId");
 
@@ -83,6 +93,9 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("HealthInsuranceId")
+                        .HasColumnType("int");
 
                     b.Property<double>("IdentificationNumber")
                         .HasColumnType("float");
@@ -113,6 +126,8 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("HealthInsuranceId");
+
                     b.ToTable("Doctors");
                 });
 
@@ -136,7 +151,7 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
                     b.Property<int>("Day")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DoctorId")
+                    b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
                     b.Property<int>("EndTime")
@@ -237,6 +252,9 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("HealthInsuranceId")
+                        .HasColumnType("int");
+
                     b.Property<double>("IdentificationNumber")
                         .HasColumnType("float");
 
@@ -262,6 +280,8 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("HealthInsuranceId");
+
                     b.HasIndex("PlanId");
 
                     b.ToTable("Patients");
@@ -281,11 +301,11 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("HealthInsuranceId")
+                    b.Property<int?>("DoctorId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                    b.Property<int>("HealthInsuranceId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -298,6 +318,8 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
 
                     b.HasIndex("HealthInsuranceId");
 
@@ -319,26 +341,17 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
                     b.ToTable("DoctorMedicalSpecialty");
                 });
 
-            modelBuilder.Entity("DoctorPlan", b =>
-                {
-                    b.Property<int>("DoctorsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PlansId")
-                        .HasColumnType("int");
-
-                    b.HasKey("DoctorsId", "PlansId");
-
-                    b.HasIndex("PlansId");
-
-                    b.ToTable("DoctorPlan");
-                });
-
             modelBuilder.Entity("ClinicaNuevoRosario.Domain.Appointment", b =>
                 {
                     b.HasOne("ClinicaNuevoRosario.Domain.Doctor", "Doctor")
                         .WithMany()
                         .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ClinicaNuevoRosario.Domain.HealthInsurance", "HealthInsurance")
+                        .WithMany()
+                        .HasForeignKey("HealthInsuranceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -350,31 +363,52 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
 
                     b.Navigation("Doctor");
 
+                    b.Navigation("HealthInsurance");
+
                     b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("ClinicaNuevoRosario.Domain.Doctor", b =>
+                {
+                    b.HasOne("ClinicaNuevoRosario.Domain.HealthInsurance", null)
+                        .WithMany("Doctors")
+                        .HasForeignKey("HealthInsuranceId");
                 });
 
             modelBuilder.Entity("ClinicaNuevoRosario.Domain.DoctorSchedule", b =>
                 {
                     b.HasOne("ClinicaNuevoRosario.Domain.Doctor", "Doctor")
                         .WithMany("DoctorSchedules")
-                        .HasForeignKey("DoctorId");
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Doctor");
                 });
 
             modelBuilder.Entity("ClinicaNuevoRosario.Domain.Patient", b =>
                 {
+                    b.HasOne("ClinicaNuevoRosario.Domain.HealthInsurance", "HealthInsurance")
+                        .WithMany()
+                        .HasForeignKey("HealthInsuranceId");
+
                     b.HasOne("ClinicaNuevoRosario.Domain.Plan", "Plan")
                         .WithMany()
                         .HasForeignKey("PlanId");
+
+                    b.Navigation("HealthInsurance");
 
                     b.Navigation("Plan");
                 });
 
             modelBuilder.Entity("ClinicaNuevoRosario.Domain.Plan", b =>
                 {
+                    b.HasOne("ClinicaNuevoRosario.Domain.Doctor", null)
+                        .WithMany("HealthInsurances")
+                        .HasForeignKey("DoctorId");
+
                     b.HasOne("ClinicaNuevoRosario.Domain.HealthInsurance", "HealthInsurance")
-                        .WithMany()
+                        .WithMany("Plans")
                         .HasForeignKey("HealthInsuranceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -397,24 +431,18 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DoctorPlan", b =>
-                {
-                    b.HasOne("ClinicaNuevoRosario.Domain.Doctor", null)
-                        .WithMany()
-                        .HasForeignKey("DoctorsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ClinicaNuevoRosario.Domain.Plan", null)
-                        .WithMany()
-                        .HasForeignKey("PlansId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ClinicaNuevoRosario.Domain.Doctor", b =>
                 {
                     b.Navigation("DoctorSchedules");
+
+                    b.Navigation("HealthInsurances");
+                });
+
+            modelBuilder.Entity("ClinicaNuevoRosario.Domain.HealthInsurance", b =>
+                {
+                    b.Navigation("Doctors");
+
+                    b.Navigation("Plans");
                 });
 #pragma warning restore 612, 618
         }
