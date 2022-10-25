@@ -8,14 +8,17 @@ using ClinicaNuevoRosario.Application.Features.Doctors.Queries.SearchDoctors;
 using ClinicaNuevoRosario.Application.Features.Doctors.Queries.SearchMedicalSpeciality;
 using ClinicaNuevoRosario.Application.Models.Doctors;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace ClinicaNuevoRosario.API.Controllers
 {
-    [EnableCors("MyPolicy")]
+
+    [Authorize]
     [ApiController]
+    [EnableCors("MyPolicy")]
     [Route("api/v1/[controller]/[action]")]
     public class DoctorController : ControllerBase
     {
@@ -26,6 +29,7 @@ namespace ClinicaNuevoRosario.API.Controllers
             _mediator = mediator;
         }
 
+        [Authorize(Roles ="Administrativo")]
         [HttpGet(Name = "AllDoctors")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<List<DoctorDto>>> GetAllDoctors()
@@ -34,6 +38,7 @@ namespace ClinicaNuevoRosario.API.Controllers
             return await _mediator.Send(query);
         }
 
+        [Authorize(Roles = "Administrativo")]
         [HttpGet(Name = "SearchDoctor")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<List<DoctorDto>>> SearchDoctor(string text)
@@ -43,6 +48,7 @@ namespace ClinicaNuevoRosario.API.Controllers
         }
 
         [HttpPost(Name = "AddDoctor")]
+        [Authorize(Roles = "Medico")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<int>> AddDoctor([FromBody] AddDoctorCommand command)
         {
@@ -50,6 +56,7 @@ namespace ClinicaNuevoRosario.API.Controllers
         }
 
         [HttpPut(Name = "UpdateDoctor")]
+        [Authorize(Roles = "Medico")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<int>> UpdateDoctor([FromBody] UpdateDoctorCommand command)
         {
@@ -57,12 +64,14 @@ namespace ClinicaNuevoRosario.API.Controllers
         }
 
         [HttpDelete(Name = "DeleteDoctor")]
+        [Authorize(Roles = "Administrador")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<int>> DeleteDoctor([FromBody] DeleteDoctorCommand command)
         {
             return await _mediator.Send(command);
         }
 
+        [Authorize(Roles = "Administrativo,Medico")]
         [HttpGet(Name = "AllMedicalSpecial")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<List<MedicalSpecialtyDto>>> AllMedicalSpecial()
@@ -73,6 +82,7 @@ namespace ClinicaNuevoRosario.API.Controllers
 
 
         [HttpGet(Name = "SearchMedicalSpecial")]
+        [Authorize(Roles = "Administrativo,Medico")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<List<MedicalSpecialtyDto>>> SearchMedicalSpecial(string text)
         {
@@ -81,6 +91,7 @@ namespace ClinicaNuevoRosario.API.Controllers
         }
 
         [HttpGet(Name = "GetDoctorsByMedicalSpeciality")]
+        [Authorize(Roles = "Administrativo")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<List<DoctorDto>>> GetDoctorsByMedicalSpeciality(int medicalSpecialityId)
         {

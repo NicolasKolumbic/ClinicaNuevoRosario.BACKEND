@@ -5,14 +5,16 @@ using ClinicaNuevoRosario.Application.Features.Appointments.Queries.GetAllAppoin
 using ClinicaNuevoRosario.Application.Features.Appointments.Queries.GetAppointmentsByDoctor;
 using ClinicaNuevoRosario.Application.Models.Doctors;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace ClinicaNuevoRosario.API.Controllers
 {
-    [EnableCors("MyPolicy")]
+    [Authorize]
     [ApiController]
+    [EnableCors("MyPolicy")]
     [Route("api/v1/[controller]/[action]")]
     public class AppointmentController : ControllerBase
     {
@@ -25,6 +27,7 @@ namespace ClinicaNuevoRosario.API.Controllers
 
         [HttpPost(Name = "AllAppointments")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
+        [Authorize(Roles = "Administrativo")]
         public async Task<ActionResult<List<AppointmentDto>>> GetAppointments()
         {
             var query = new GetAllAppointmentsQuery();
@@ -32,6 +35,7 @@ namespace ClinicaNuevoRosario.API.Controllers
         }
 
         [HttpPost(Name = "AddAppointment")]
+        [Authorize(Roles = "Administrativo")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<int>> AddAppointment([FromBody] AddAppointmentCommand command)
         {
@@ -39,6 +43,7 @@ namespace ClinicaNuevoRosario.API.Controllers
         }
 
         [HttpPut(Name = "UpdateAppointment")]
+        [Authorize(Roles = "Administrativo")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<int>> UpdateAppointment([FromBody] UpdateAppointmentCommand command)
         {
@@ -46,6 +51,7 @@ namespace ClinicaNuevoRosario.API.Controllers
         }
 
         [HttpDelete(Name = "DeleteAppointment")]
+        [Authorize(Roles = "Administrativo")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<int>> DeleteAppointment([FromBody] DeleteAppointmentCommand command)
         {
@@ -53,6 +59,7 @@ namespace ClinicaNuevoRosario.API.Controllers
         }
 
         [HttpGet(Name = "GetAppointmentsByDoctorId")]
+        [Authorize(Roles = "Administrativo,Medico")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<List<AppointmentDto>>> GetAppointmentsByDoctorId(int doctorId)
         {
