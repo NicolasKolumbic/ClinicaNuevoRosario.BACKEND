@@ -41,9 +41,8 @@ namespace ClinicaNuevoRosario.API.Controllers
         [Authorize(Roles = "Administrativo")]
         [HttpGet(Name = "SearchDoctor")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult<List<DoctorDto>>> SearchDoctor(string text)
+        public async Task<ActionResult<List<DoctorDto>>> SearchDoctor([FromQuery] SearchDoctorsQuery query)
         {
-            var query = new SearchDoctorsQuery() { Text = text};
             return await _mediator.Send(query);
         }
 

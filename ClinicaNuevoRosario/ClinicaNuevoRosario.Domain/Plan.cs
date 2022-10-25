@@ -8,5 +8,8 @@ namespace ClinicaNuevoRosario.Domain
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; }
+        public bool IsActive { get; set; }
+        public virtual HealthInsurance HealthInsurance { get; set; }
+        public virtual List<Doctor>? Doctors { get; set; }
     }
 }

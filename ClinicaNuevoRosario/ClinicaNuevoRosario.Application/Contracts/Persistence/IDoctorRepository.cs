@@ -9,6 +9,9 @@ namespace ClinicaNuevoRosario.Application.Contracts.Persistence
 
         public Task<IQueryable<Doctor>> GetByMedicalSpeciality(int medicalSpecialityId);
 
+        public Task<IQueryable<Doctor>> GetByMedicalSpecialityOrHealthInsurance(int? medicalSpecialityId, int? planId);
+
+
         public Task<IQueryable<Doctor>> GetAll();
 
 

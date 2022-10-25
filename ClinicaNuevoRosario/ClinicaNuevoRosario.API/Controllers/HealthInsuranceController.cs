@@ -10,6 +10,7 @@ using System.Net;
 
 namespace ClinicaNuevoRosario.API.Controllers
 {
+
     [Authorize]
     [EnableCors("MyPolicy")]
     [ApiController]
