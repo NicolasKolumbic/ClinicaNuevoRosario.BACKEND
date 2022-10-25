@@ -51,9 +51,12 @@ namespace ClinicaNuevoRosario.Identity.Services
 
             var response = new AuthResponse();
             response.Id = user.Id;
-            response.UserName = user.UserName;
+            response.Name = user.Name;
+            response.LastName = user.LastName;
+            response.ExpireIn = this._jwtSettings.DurationInMinutes;
             response.Email = user.Email;
             response.Token = new JwtSecurityTokenHandler().WriteToken(token);
+            response.Roles = (await _userManager.GetRolesAsync(user)).ToList();
 
             return response;
         }
@@ -73,15 +76,15 @@ namespace ClinicaNuevoRosario.Identity.Services
                 EmailConfirmed = true,
                 Name = request.Name,
                 LastName = request.LastName,
-                UserName = request.Email
+                UserName = request.Username
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
             var token = await GenerateToken(user);
 
             if (result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(user, "Medico");
+            {  
+                await _userManager.AddToRoleAsync(user, "Básico");
                 return new RegistrationResponse
                 {
                     Email = user.Email,
@@ -95,7 +98,7 @@ namespace ClinicaNuevoRosario.Identity.Services
 
         }
 
-        public async Task RecoverPassword(string email)
+        public async Task<string> RecoverPassword(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user is null)
@@ -103,16 +106,9 @@ namespace ClinicaNuevoRosario.Identity.Services
                 throw new Exception($"El usuario con email {email} no existe");
             }
 
-            var passwordResetToken = _userManager.GeneratePasswordResetTokenAsync(user);
+            var passwordResetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            var emailReset = new Email()
-            { 
-                Body = "passwordResetToken: " + passwordResetToken,
-                To = user.Email,
-                Subject = "Reestablecer Contraseña"
-            };
-
-            await _emailService.SendEmail(emailReset);
+           return passwordResetToken is null ? String.Empty: passwordResetToken;
 
 
         }

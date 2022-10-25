@@ -3,12 +3,15 @@ using ClinicaNuevoRosario.Application.Features.HealthInsurance.Queries.GetAllHea
 using ClinicaNuevoRosario.Application.Features.HealthInsurance.Queries.GetAllPlans;
 using ClinicaNuevoRosario.Application.Models.Doctors;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace ClinicaNuevoRosario.API.Controllers
 {
+
+    [Authorize]
     [EnableCors("MyPolicy")]
     [ApiController]
     [Route("api/v1/[controller]/[action]")]
@@ -22,6 +25,7 @@ namespace ClinicaNuevoRosario.API.Controllers
         }
 
         [HttpGet(Name = "AllPlans")]
+        [Authorize(Roles ="Administrativo,Medico")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<List<GetPlanDto>>> GetAllPlans()
         {

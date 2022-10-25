@@ -1,11 +1,14 @@
 ﻿using ClinicaNuevoRosario.Application.Contracts.Identity;
 using ClinicaNuevoRosario.Application.Models.Identity;
 using ClinicaNuevoRosario.Application.Models.User;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClinicaNuevoRosario.API.Controllers
 {
     [ApiController]
+    [EnableCors("MyPolicy")]
+    [Route("api/v1/[controller]/[action]")]
     public class AccountController: ControllerBase
     {
         private readonly IAuthService _authService;
@@ -15,27 +18,27 @@ namespace ClinicaNuevoRosario.API.Controllers
             _authService = authService;
         }
 
-        [HttpPost("Login")]
+        [HttpPost(Name = "Login")]
         public async Task<ActionResult<AuthResponse>> Login([FromBody] AuthRequest request)
         {
             var result = await _authService.Login(request);
             return Ok(result);
         }
 
-        [HttpPost("Register")]
+        [HttpPost(Name = "Register")]
         public async Task<ActionResult<RegistrationResponse>> Register([FromBody] RegistrationRequest request)
         {
             var result = await _authService.Register(request);
             return Ok(result);
         }
 
-        [HttpPost("RecoverPassword")]
-        public async Task RecoverPassword([FromBody] string email)
+        [HttpPost(Name = "RecoverPassword")]
+        public async Task<string> RecoverPassword([FromForm] string email)
         {
-            await _authService.RecoverPassword(email);
+            return await _authService.RecoverPassword(email);
         }
 
-        [HttpPost("ResetPassword")]
+        [HttpPost(Name = "ResetPassword")]
         public async Task ResetPassword([FromBody] ResetPassword resetPassword)
         {
             await _authService.ResetPassword(resetPassword);

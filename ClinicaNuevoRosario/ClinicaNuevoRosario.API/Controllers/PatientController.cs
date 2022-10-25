@@ -4,12 +4,14 @@ using ClinicaNuevoRosario.Application.Features.Patients.Queries.SearchPatients;
 using ClinicaNuevoRosario.Application.Models.Doctors;
 using ClinicaNuevoRosario.Application.Models.Pantients;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace ClinicaNuevoRosario.API.Controllers
 {
+    [Authorize]
     [EnableCors("MyPolicy")]
     [ApiController]
     [Route("api/v1/[controller]/[action]")]
@@ -24,6 +26,7 @@ namespace ClinicaNuevoRosario.API.Controllers
 
         [HttpGet(Name = "SearchPatient")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
+        [Authorize(Roles = "Administrativo,Medico")]
         public async Task<ActionResult<List<PatientDto>>> SearchPatient(string text)
         {
             var query = new SearchPatientQuery() { Text = text };
@@ -32,6 +35,7 @@ namespace ClinicaNuevoRosario.API.Controllers
 
 
         [HttpGet(Name = "GetAllHealthInsurances")]
+        [Authorize(Roles = "Administrativo,Medico")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<List<HealthInsuranceDto>>> GetAllHealthInsurances()
         {
@@ -41,6 +45,7 @@ namespace ClinicaNuevoRosario.API.Controllers
 
 
         [HttpPost(Name = "AddPatient")]
+        [Authorize(Roles = "Administrativo")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<int>> AddPatient([FromBody] AddPatientCommand command)
         {
