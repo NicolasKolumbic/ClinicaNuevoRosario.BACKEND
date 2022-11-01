@@ -1,7 +1,6 @@
 ﻿using ClinicaNuevoRosario.Application.Consts;
 using ClinicaNuevoRosario.Application.Contracts.External;
 using ClinicaNuevoRosario.Application.Contracts.Identity;
-using ClinicaNuevoRosario.Application.Models;
 using ClinicaNuevoRosario.Application.Models.Identity;
 using ClinicaNuevoRosario.Application.Models.User;
 using ClinicaNuevoRosario.Identity.Models;
@@ -98,7 +97,7 @@ namespace ClinicaNuevoRosario.Identity.Services
 
         }
 
-        public async Task<string> RecoverPassword(string email)
+        public async Task<RecoverPasswordResponse> RecoverPassword(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user is null)
@@ -107,8 +106,11 @@ namespace ClinicaNuevoRosario.Identity.Services
             }
 
             var passwordResetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var recoverPasswordResponse = new RecoverPasswordResponse();
+            recoverPasswordResponse.Email = user.Email;
+            recoverPasswordResponse.Token = passwordResetToken is null ? String.Empty : passwordResetToken;
 
-           return passwordResetToken is null ? String.Empty: passwordResetToken;
+           return recoverPasswordResponse;
 
 
         }
