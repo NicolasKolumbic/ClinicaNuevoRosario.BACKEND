@@ -33,7 +33,7 @@ namespace ClinicaNuevoRosario.API.Controllers
         }
 
         [HttpPost(Name = "RecoverPassword")]
-        public async Task<string> RecoverPassword([FromForm] string email)
+        public async Task<RecoverPasswordResponse> RecoverPassword([FromForm] string email)
         {
             return await _authService.RecoverPassword(email);
         }

@@ -8,6 +8,6 @@ namespace ClinicaNuevoRosario.Application.Contracts.Identity
         Task<AuthResponse> Login(AuthRequest request);
         Task<RegistrationResponse> Register(RegistrationRequest request);
         Task ResetPassword(ResetPassword resetPassword);
-        Task<string> RecoverPassword(string email);
+        Task<RecoverPasswordResponse> RecoverPassword(string email);
     }
 }
