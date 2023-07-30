@@ -30,6 +30,9 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("AppointmentStateId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Comments")
                         .HasColumnType("nvarchar(max)");
 
@@ -45,6 +48,9 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ServiceTypeId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Time")
                         .HasColumnType("datetime2");
 
@@ -56,11 +62,32 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AppointmentStateId");
+
                     b.HasIndex("DoctorId");
 
                     b.HasIndex("PatientId");
 
+                    b.HasIndex("ServiceTypeId");
+
                     b.ToTable("Appointments");
+                });
+
+            modelBuilder.Entity("ClinicaNuevoRosario.Domain.AppointmentState", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppointmentStates");
                 });
 
             modelBuilder.Entity("ClinicaNuevoRosario.Domain.Doctor", b =>
@@ -104,6 +131,9 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
 
                     b.Property<double>("PhoneNumber")
                         .HasColumnType("float");
+
+                    b.Property<string>("SystemEmail")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
@@ -190,6 +220,45 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
                     b.ToTable("HealthInsurances");
                 });
 
+            modelBuilder.Entity("ClinicaNuevoRosario.Domain.MedicalHistory", b =>
+                {
+                    b.Property<int>("MedicalHistoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MedicalHistoryId"), 1L, 1);
+
+                    b.Property<string>("Comments")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MedicalHistoryId");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("MedicalHistories");
+                });
+
             modelBuilder.Entity("ClinicaNuevoRosario.Domain.MedicalSpecialty", b =>
                 {
                     b.Property<int>("Id")
@@ -236,6 +305,9 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("HealthInsurranceNumber")
+                        .HasColumnType("int");
 
                     b.Property<double>("IdentificationNumber")
                         .HasColumnType("float");
@@ -304,6 +376,23 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
                     b.ToTable("Plan");
                 });
 
+            modelBuilder.Entity("ClinicaNuevoRosario.Domain.ServiceType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ServiceTypes");
+                });
+
             modelBuilder.Entity("DoctorMedicalSpecialty", b =>
                 {
                     b.Property<int>("DoctorsId")
@@ -336,6 +425,10 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
 
             modelBuilder.Entity("ClinicaNuevoRosario.Domain.Appointment", b =>
                 {
+                    b.HasOne("ClinicaNuevoRosario.Domain.AppointmentState", "AppointmentState")
+                        .WithMany()
+                        .HasForeignKey("AppointmentStateId");
+
                     b.HasOne("ClinicaNuevoRosario.Domain.Doctor", "Doctor")
                         .WithMany()
                         .HasForeignKey("DoctorId")
@@ -348,9 +441,17 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ClinicaNuevoRosario.Domain.ServiceType", "ServiceType")
+                        .WithMany()
+                        .HasForeignKey("ServiceTypeId");
+
+                    b.Navigation("AppointmentState");
+
                     b.Navigation("Doctor");
 
                     b.Navigation("Patient");
+
+                    b.Navigation("ServiceType");
                 });
 
             modelBuilder.Entity("ClinicaNuevoRosario.Domain.DoctorSchedule", b =>
@@ -360,6 +461,25 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
                         .HasForeignKey("DoctorId");
 
                     b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("ClinicaNuevoRosario.Domain.MedicalHistory", b =>
+                {
+                    b.HasOne("ClinicaNuevoRosario.Domain.Doctor", "Doctor")
+                        .WithMany("MedicalHistories")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ClinicaNuevoRosario.Domain.Patient", "Patient")
+                        .WithMany("MedicalHistories")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("ClinicaNuevoRosario.Domain.Patient", b =>
@@ -415,6 +535,13 @@ namespace ClinicaNuevoRosario.Infrastructure.Migrations
             modelBuilder.Entity("ClinicaNuevoRosario.Domain.Doctor", b =>
                 {
                     b.Navigation("DoctorSchedules");
+
+                    b.Navigation("MedicalHistories");
+                });
+
+            modelBuilder.Entity("ClinicaNuevoRosario.Domain.Patient", b =>
+                {
+                    b.Navigation("MedicalHistories");
                 });
 #pragma warning restore 612, 618
         }

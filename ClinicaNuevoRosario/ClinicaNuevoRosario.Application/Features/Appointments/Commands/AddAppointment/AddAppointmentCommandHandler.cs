@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ClinicaNuevoRosario.Application.Contracts.External;
 using ClinicaNuevoRosario.Application.Contracts.Persistence;
+using ClinicaNuevoRosario.Application.Helpers;
 using ClinicaNuevoRosario.Application.Models;
 using ClinicaNuevoRosario.Domain;
 using MediatR;
@@ -26,6 +27,8 @@ namespace ClinicaNuevoRosario.Application.Features.Appointments.Commands.AddAppo
         public async Task<int> Handle(AddAppointmentCommand request, CancellationToken cancellationToken)
         {
             var appointmentEntity = _mapper.Map<Appointment>(request);
+            appointmentEntity.ServiceTypeId = (int)ServiceTypes.Consultorio;
+            appointmentEntity.AppointmentStateId = (int)AppointmentStates.Assigned;
             var addedAppointment = await _appointmentRepository.AddAsync(appointmentEntity);
             _logger.LogInformation($"Doctor: {addedAppointment} fue creado correctamente");
 

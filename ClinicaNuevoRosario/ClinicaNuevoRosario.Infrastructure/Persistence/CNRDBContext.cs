@@ -1,9 +1,6 @@
 ﻿using ClinicaNuevoRosario.Domain;
 using ClinicaNuevoRosario.Domain.Common;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.Extensions.DependencyInjection;
-using System.IO;
 
 namespace ClinicaNuevoRosario.Infrastructure.Persistence
 {
@@ -13,9 +10,10 @@ namespace ClinicaNuevoRosario.Infrastructure.Persistence
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<DoctorSchedule> DoctorSchedules { get; set; }
         public DbSet<HealthInsurance> HealthInsurances { get; set; }
-
+        public DbSet<MedicalHistory> MedicalHistories { get; set; }
+        public DbSet<AppointmentState> AppointmentStates { get; set; }
+        public DbSet<ServiceType> ServiceTypes { get; set; }
         public DbSet<Plan> Plan { get; set; }
-
         public DbSet<MedicalSpecialty> MedicalSpecialties { get; set; }
         public DbSet<Patient> Patients { get; set; }
 

@@ -15,7 +15,7 @@ namespace ClinicaNuevoRosario.Identity.Configurations
             },
             new IdentityUserRole<string>
             {
-                RoleId = "6f8b16d7-b2e4-420c-8c96-3ab021b11b78",
+                RoleId = "d2c01424-3245-4dff-abb4-51086fb6f897",
                 UserId = "a3ec6212-26ef-4871-b13f-7e7c8d8c5101"
             }
             );

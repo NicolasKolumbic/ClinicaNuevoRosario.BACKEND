@@ -99,7 +99,7 @@ namespace ClinicaNuevoRosario.Identity.Migrations
                         {
                             Id = "3600fe5c-e3f3-4e0f-9bf4-e98d32eb5e12",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e1c2900b-be1b-4115-9af8-0586da203e31",
+                            ConcurrencyStamp = "158e2f71-fb9e-4091-87a5-0b8271c52a78",
                             Email = "nicolaskolumbic@hotmail.com",
                             EmailConfirmed = true,
                             LastName = "Kolumbic",
@@ -107,9 +107,9 @@ namespace ClinicaNuevoRosario.Identity.Migrations
                             Name = "Nicolás",
                             NormalizedEmail = "nicolaskolumbic@hotmail.com",
                             NormalizedUserName = "NKOLUMBIC",
-                            PasswordHash = "AQAAAAEAACcQAAAAEELSJYlKoxZwpLFdpznhMeHQNHFn5FtS4piAKLm7zSrpe7flW4F7z9Vj0Aulz8MRsA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHYdWgkLWt8SLpZYVHFbEJVRsqQP9AGM7aFlzH1wpw1lqo6i8tbmVoSkcKhvDP223w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5b5077a2-3615-423c-92eb-db6acedc8315",
+                            SecurityStamp = "f3c97709-8a7e-4906-85aa-624cc6b7809c",
                             TwoFactorEnabled = false,
                             UserName = "nkolumbic"
                         },
@@ -117,7 +117,7 @@ namespace ClinicaNuevoRosario.Identity.Migrations
                         {
                             Id = "a3ec6212-26ef-4871-b13f-7e7c8d8c5101",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cc8327e2-16ce-4081-8225-a7b99357f3ed",
+                            ConcurrencyStamp = "a7318b90-71cd-4015-a3ec-fd0f2ce1c58c",
                             Email = "gastonbarbero@hotmail.com",
                             EmailConfirmed = true,
                             LastName = "Barbero",
@@ -125,9 +125,9 @@ namespace ClinicaNuevoRosario.Identity.Migrations
                             Name = "Gastón",
                             NormalizedEmail = "gastonbarbero@hotmail.com",
                             NormalizedUserName = "gbarbero",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDVhrGoEdcFcV0Ic2WPAs79x0EA2yhSynCzhvWGe3xQ/xL8fiPMoClaKZgRhPuy1vw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGthmBCN9vhM1oBPnGC6xZsx7G3gLLwIv+gEX4lK1Sq1wo9ZUwwwcUZXYO3WrklbhA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7350269c-e50e-43ac-aaa3-2c46613fd3ae",
+                            SecurityStamp = "d3c4515f-65cb-4167-a3e0-fe3e486a57a6",
                             TwoFactorEnabled = false,
                             UserName = "gbarbero"
                         });
@@ -163,30 +163,37 @@ namespace ClinicaNuevoRosario.Identity.Migrations
                         new
                         {
                             Id = "d2c01424-3245-4dff-abb4-51086fb6f897",
-                            ConcurrencyStamp = "aebf5fd3-e46c-46c9-8777-e42ee855e560",
+                            ConcurrencyStamp = "fe992184-85ca-4f9c-9696-f80a31e55e44",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
                             Id = "6f8b16d7-b2e4-420c-8c96-3ab021b11b78",
-                            ConcurrencyStamp = "0419a811-538d-4fdf-9177-06950a81d794",
+                            ConcurrencyStamp = "6a0cf831-b16c-43c1-9455-50406bda12ad",
                             Name = "Administrativo",
                             NormalizedName = "ADMINISTRATIVO"
                         },
                         new
                         {
                             Id = "304ec0ad-f5dd-442f-ae18-ed26ef5feb27",
-                            ConcurrencyStamp = "324f005a-b424-4ab3-8f08-7d90b70b9f73",
+                            ConcurrencyStamp = "b07ae099-8502-46ad-8f5a-26809bc9dffc",
                             Name = "Medico",
                             NormalizedName = "MEDICO"
                         },
                         new
                         {
                             Id = "084136d8-c054-46d1-beb8-14ad1e647b2d",
-                            ConcurrencyStamp = "891abf22-af25-48f0-8c8c-266227256702",
+                            ConcurrencyStamp = "3d1ada60-acb6-4f15-b540-552c293b24c8",
                             Name = "Visitante",
-                            NormalizedName = "Visitante"
+                            NormalizedName = "VISITANTE"
+                        },
+                        new
+                        {
+                            Id = "30a33a14-23a6-447d-ae41-fbcbb7815f61",
+                            ConcurrencyStamp = "f5df1cb9-bee9-4fd7-9adc-74eebbabbf05",
+                            Name = "Contable",
+                            NormalizedName = "CONTABLE"
                         });
                 });
 
@@ -285,7 +292,7 @@ namespace ClinicaNuevoRosario.Identity.Migrations
                         new
                         {
                             UserId = "a3ec6212-26ef-4871-b13f-7e7c8d8c5101",
-                            RoleId = "6f8b16d7-b2e4-420c-8c96-3ab021b11b78"
+                            RoleId = "d2c01424-3245-4dff-abb4-51086fb6f897"
                         });
                 });
 

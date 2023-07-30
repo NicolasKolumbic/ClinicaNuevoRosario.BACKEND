@@ -33,17 +33,6 @@ namespace ClinicaNuevoRosario.API.Controllers
             return await _mediator.Send(query);
         }
 
-
-        [HttpGet(Name = "GetAllHealthInsurances")]
-        [Authorize(Roles = "Administrativo,Medico")]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult<List<HealthInsuranceDto>>> GetAllHealthInsurances()
-        {
-            var query = new GetAllHealthInsurancesQuery();
-            return await _mediator.Send(query);
-        }
-
-
         [HttpPost(Name = "AddPatient")]
         [Authorize(Roles = "Administrativo")]
         [ProducesResponseType((int)HttpStatusCode.OK)]

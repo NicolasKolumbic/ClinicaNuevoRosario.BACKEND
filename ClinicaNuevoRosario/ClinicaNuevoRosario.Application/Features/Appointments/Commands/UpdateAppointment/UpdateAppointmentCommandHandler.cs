@@ -23,14 +23,20 @@ namespace ClinicaNuevoRosario.Application.Features.Appointments.Commands.UpdateA
 
         public async Task<int> Handle(UpdateAppointmentCommand request, CancellationToken cancellationToken)
         {
-            var appointment = await _appointmentRepository.GetByIdAsync(request.AppointmentId);
+            var appointment = await _appointmentRepository.GetAppointmentById(request.AppointmentId);
             if (appointment == null)
             {
                 _logger.LogError($"No se encontrado el una persona con id: {request.AppointmentId}");
                 throw new NotFoundException(nameof(Appointment), request.AppointmentId);
             }
-
-            _mapper.Map(request, appointment, typeof(UpdateAppointmentCommand), typeof(Appointment));
+            if(request.MedicalHistoryComment != null)
+            {
+                var medicalHistory = new MedicalHistory();
+                medicalHistory.Comments = request.MedicalHistoryComment;
+                appointment.Patient.MedicalHistories.Add(medicalHistory);
+            }
+           
+            appointment.AppointmentStateId = (int)request.AppointmentState;
             var updatedAppointment = await _appointmentRepository.UpdateAsync(appointment);
             _logger.LogInformation($"Cita: {updatedAppointment} fue actualizado correctamente");
 

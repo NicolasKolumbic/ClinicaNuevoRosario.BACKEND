@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using ClinicaNuevoRosario.Application.Contracts.Persistence;
-using ClinicaNuevoRosario.Application.Features.HealthInsurance.Queries.GetAllHealthInsurances;
 using ClinicaNuevoRosario.Application.Models.Doctors;
 using MediatR;
 

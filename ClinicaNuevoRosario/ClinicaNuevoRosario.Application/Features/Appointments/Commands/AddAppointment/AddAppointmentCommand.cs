@@ -1,4 +1,5 @@
-﻿using ClinicaNuevoRosario.Application.Models.Doctors;
+﻿using ClinicaNuevoRosario.Application.Helpers;
+using ClinicaNuevoRosario.Application.Models.Doctors;
 using ClinicaNuevoRosario.Application.Models.Pantients;
 using ClinicaNuevoRosario.Domain;
 using MediatR;
@@ -12,5 +13,7 @@ namespace ClinicaNuevoRosario.Application.Features.Appointments.Commands.AddAppo
         public PatientDto Patient { get; set; }
         public bool IsActive { get; set; } = true;
         public string Comments { get; set; } = string.Empty;
+        public ServiceTypes ServiceType { get; set; }
+        public AppointmentStates AppointmentState { get; set; }
     }
 }

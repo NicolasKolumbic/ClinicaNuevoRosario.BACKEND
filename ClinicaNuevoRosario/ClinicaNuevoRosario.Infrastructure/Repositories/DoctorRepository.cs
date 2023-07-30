@@ -1,12 +1,7 @@
 ﻿using ClinicaNuevoRosario.Application.Contracts.Persistence;
-using ClinicaNuevoRosario.Application.Models.Doctors;
 using ClinicaNuevoRosario.Domain;
 using ClinicaNuevoRosario.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.AccessControl;
 
 namespace ClinicaNuevoRosario.Infrastructure.Repositories
 {
@@ -72,6 +67,18 @@ namespace ClinicaNuevoRosario.Infrastructure.Repositories
 
             return result;
         }
+
+        public async Task<Doctor> GetDoctorByEmail(string email)
+        { 
+            var result = _context.Doctors
+                .Include(x => x.DoctorSchedules)
+                .Include(x => x.MedicalSpecialties)
+                .Where(d => d.Email == email).FirstOrDefault();
+
+            return result;
+        }
+
+
 
     }
 }

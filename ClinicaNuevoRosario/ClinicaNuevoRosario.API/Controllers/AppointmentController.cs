@@ -2,7 +2,11 @@
 using ClinicaNuevoRosario.Application.Features.Appointments.Commands.DeleteAppointment;
 using ClinicaNuevoRosario.Application.Features.Appointments.Commands.UpdateAppointment;
 using ClinicaNuevoRosario.Application.Features.Appointments.Queries.GetAllAppointments;
+using ClinicaNuevoRosario.Application.Features.Appointments.Queries.GetAppointmentById;
 using ClinicaNuevoRosario.Application.Features.Appointments.Queries.GetAppointmentsByDoctor;
+using ClinicaNuevoRosario.Application.Features.Appointments.Queries.GetAppointmentsByEmail;
+using ClinicaNuevoRosario.Application.Features.Appointments.Queries.GetAppointmentsByHealthInsuranceId;
+using ClinicaNuevoRosario.Application.Features.ReportGenerator.Command;
 using ClinicaNuevoRosario.Application.Models.Doctors;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -19,6 +23,7 @@ namespace ClinicaNuevoRosario.API.Controllers
     public class AppointmentController : ControllerBase
     {
         private readonly IMediator _mediator;
+
 
         public AppointmentController(IMediator mediator)
         {
@@ -43,7 +48,7 @@ namespace ClinicaNuevoRosario.API.Controllers
         }
 
         [HttpPut(Name = "UpdateAppointment")]
-        [Authorize(Roles = "Administrativo")]
+        [Authorize(Roles = "Administrativo,Medico")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<int>> UpdateAppointment([FromBody] UpdateAppointmentCommand command)
         {
@@ -65,6 +70,51 @@ namespace ClinicaNuevoRosario.API.Controllers
         {
             var query = new GetAppointmentsByDoctorQuery() { DoctorId = doctorId};
             return await _mediator.Send(query);
+        }
+
+        [HttpGet(Name = "GetAppointmentsByEmail")]
+        [Authorize(Roles = "Medico")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult<List<AppointmentDto>>> GetAppointmentsByEmail(string email)
+        {
+            var query = new GetAppointmentsByEmailQuery() { Email = email };
+            return await _mediator.Send(query);
+        }
+
+        [HttpGet(Name = "GetAppointmentsByHealthInsuranceId")]
+        [Authorize(Roles = "Administrativo")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult<List<AppointmentDto>>> GetAppointmentsByHealthInsuranceId(int healthInsuranceId)
+        {
+            var query = new GetAppointmentsByHealthInsuranceQuery() { HealthInsuranceId = healthInsuranceId };
+            return await _mediator.Send(query);
+        }
+
+        [HttpGet(Name = "GetAppointmentsById")]
+        [Authorize(Roles = "Medico,Administrativo")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult<AppointmentDto>> GetAppointmentsById(int appointmentId)
+        {
+            var query = new GetAppointmentByIdQuery() { AppointmentId = appointmentId };
+            return await _mediator.Send(query);
+        }
+
+        [HttpGet(Name = "GetAllAppointments")]
+        [Authorize(Roles = "Medico,Administrativo,Contable")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult<List<AppointmentDto>>> GetAllAppointments()
+        {
+            var query = new GetAllAppointmentsQuery();
+            return await _mediator.Send(query);
+        }
+
+        [HttpPost(Name = "ReportGenerator")]
+        [Authorize(Roles = "Contable")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult> ReportGenerator([FromBody] ReportGeneratorCommand command)
+        {
+            var file = await _mediator.Send(command);
+            return File(file, "application/pdf");
         }
 
     }

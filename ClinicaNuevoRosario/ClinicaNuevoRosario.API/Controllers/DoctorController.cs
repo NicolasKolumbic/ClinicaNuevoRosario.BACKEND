@@ -3,6 +3,7 @@ using ClinicaNuevoRosario.Application.Features.Doctors.Commands.DeleteDoctor;
 using ClinicaNuevoRosario.Application.Features.Doctors.Commands.UpdateDoctor;
 using ClinicaNuevoRosario.Application.Features.Doctors.Queries.GetAllDoctors;
 using ClinicaNuevoRosario.Application.Features.Doctors.Queries.GetAllMedicalSpecialities;
+using ClinicaNuevoRosario.Application.Features.Doctors.Queries.GetDoctorById;
 using ClinicaNuevoRosario.Application.Features.Doctors.Queries.GetDoctorsByMedicalSpeciality;
 using ClinicaNuevoRosario.Application.Features.Doctors.Queries.SearchDoctors;
 using ClinicaNuevoRosario.Application.Features.Doctors.Queries.SearchMedicalSpeciality;
@@ -70,7 +71,7 @@ namespace ClinicaNuevoRosario.API.Controllers
             return await _mediator.Send(command);
         }
 
-        [Authorize(Roles = "Administrativo,Medico")]
+        [Authorize(Roles = "Administrativo,Medico, Contable")]
         [HttpGet(Name = "AllMedicalSpecial")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<List<MedicalSpecialtyDto>>> AllMedicalSpecial()
@@ -95,6 +96,15 @@ namespace ClinicaNuevoRosario.API.Controllers
         public async Task<ActionResult<List<DoctorDto>>> GetDoctorsByMedicalSpeciality(int medicalSpecialityId)
         {
             var query = new GetDoctorsByMedicalSpecialityQuery() { MedicalSpecialityId = medicalSpecialityId };
+            return await _mediator.Send(query);
+        }
+
+        [HttpGet(Name = "GetDoctorByEmail")]
+        [Authorize(Roles = "Medico")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult<DoctorDto>> GetDoctorByEmail(string email)
+        {
+            var query = new GetDoctorByEmailQuery() { Email = email };
             return await _mediator.Send(query);
         }
     }

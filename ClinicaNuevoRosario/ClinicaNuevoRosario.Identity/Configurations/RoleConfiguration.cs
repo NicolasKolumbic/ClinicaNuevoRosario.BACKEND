@@ -31,8 +31,13 @@ namespace ClinicaNuevoRosario.Identity.Configurations
                 Id = "084136d8-c054-46d1-beb8-14ad1e647b2d",
                 Name = "Visitante",
                 NormalizedName = "VISITANTE"
+            },
+            new IdentityRole
+            {
+                Id = "30a33a14-23a6-447d-ae41-fbcbb7815f61",
+                Name = "Contable",
+                NormalizedName = "CONTABLE"
             });
-
         }
     }
 }

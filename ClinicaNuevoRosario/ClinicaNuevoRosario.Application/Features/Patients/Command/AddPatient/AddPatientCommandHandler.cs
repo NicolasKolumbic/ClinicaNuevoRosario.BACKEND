@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using ClinicaNuevoRosario.Application.Contracts.Persistence;
-using ClinicaNuevoRosario.Application.Models.Pantients;
 using ClinicaNuevoRosario.Domain;
 using MediatR;
 using Microsoft.Extensions.Logging;
