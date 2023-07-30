@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace ClinicaNuevoRosario.Identity.Services
 {
-    public class UserService : IUserService<ApplicationUser>
+    public class UserService : IUserService<ApplicationUser, UserChat>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
@@ -18,6 +18,8 @@ namespace ClinicaNuevoRosario.Identity.Services
             _mapper = mapper;
         }
 
+       
+
         public async Task DeleteAsync(ApplicationUser entity)
         {
              await _userManager.DeleteAsync(entity);
@@ -25,9 +27,17 @@ namespace ClinicaNuevoRosario.Identity.Services
 
         public async Task<ApplicationUser> GetUserByAsync(Expression<Func<ApplicationUser, bool>> predicate)
         {
+         
           return await _userManager.Users.FirstAsync(predicate);
         }
 
-       
+        public async Task<List<UserChat>> GetUsersAsync()
+        {
+            var users = _userManager.Users.ToList();
+            var mapped = users.Select( u => new UserChat(u)).ToList();
+            return mapped;
+        }
+
+
     }
 }

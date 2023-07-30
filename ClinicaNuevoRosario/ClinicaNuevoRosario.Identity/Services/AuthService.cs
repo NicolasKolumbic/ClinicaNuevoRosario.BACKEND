@@ -4,9 +4,11 @@ using ClinicaNuevoRosario.Application.Contracts.Identity;
 using ClinicaNuevoRosario.Application.Models.Identity;
 using ClinicaNuevoRosario.Application.Models.User;
 using ClinicaNuevoRosario.Identity.Models;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -127,6 +129,32 @@ namespace ClinicaNuevoRosario.Identity.Services
             {
                 throw new Exception("No se ha podido reestablecer su contraseña");
             }
+        }
+
+        public async Task<AuthResponse> AssignRole(string email, string role)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user is null)
+            {
+                throw new Exception($"El usuario con email {email} no existe");
+            }
+           
+            var roles = await _userManager.GetRolesAsync(user);
+            await _userManager.RemoveFromRolesAsync(user, roles);
+            await _userManager.AddToRoleAsync(user, role);
+            var token = await GenerateToken(user);
+
+            var response = new AuthResponse();
+            response.Id = user.Id;
+            response.Name = user.Name;
+            response.LastName = user.LastName;
+            response.ExpireIn = this._jwtSettings.DurationInMinutes;
+            response.Email = user.Email;
+            response.Token = new JwtSecurityTokenHandler().WriteToken(token);
+            response.Roles = (await _userManager.GetRolesAsync(user)).ToList();
+
+            return response;
+
         }
 
         private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)

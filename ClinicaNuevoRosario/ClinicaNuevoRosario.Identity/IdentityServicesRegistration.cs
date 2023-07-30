@@ -1,5 +1,7 @@
 ﻿using ClinicaNuevoRosario.Application.Contracts.Identity;
+using ClinicaNuevoRosario.Application.Mappings;
 using ClinicaNuevoRosario.Application.Models.Identity;
+using ClinicaNuevoRosario.Application.Models.User;
 using ClinicaNuevoRosario.Identity.Models;
 using ClinicaNuevoRosario.Identity.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -32,7 +34,7 @@ namespace ClinicaNuevoRosario.Identity
             }).AddEntityFrameworkStores<CNRIdentityDbContext>().AddDefaultTokenProviders();
 
             services.AddTransient<IAuthService, AuthService>();
-            services.AddTransient<IUserService<ApplicationUser>, UserService>();
+            services.AddTransient<IUserService<ApplicationUser, UserChat>, UserService>();
 
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -51,8 +53,6 @@ namespace ClinicaNuevoRosario.Identity
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSetting:Key"]))
                 };
             });
-
-
 
             services.Configure<DataProtectionTokenProviderOptions>(opt => opt.TokenLifespan = TimeSpan.FromHours(2));
 

@@ -18,7 +18,7 @@ namespace ClinicaNuevoRosario.Application.Features.HealthInsurance.Queries.GetAl
 
         public async Task<List<HealthInsuranceDto>> Handle(GetAllHealthInsurancesQuery request, CancellationToken cancellationToken)
         {
-            var healthInsurances = await _healthInsurancesRepository.GetAllAsync("Plans");
+            var healthInsurances = await _healthInsurancesRepository.GetAllAsync();
             return _mapper.Map<List<HealthInsuranceDto>>(healthInsurances.ToList());
         }
     }

@@ -1,6 +1,7 @@
 ﻿using ClinicaNuevoRosario.Application.Contracts.Identity;
 using ClinicaNuevoRosario.Application.Models.Identity;
 using ClinicaNuevoRosario.Application.Models.User;
+using ClinicaNuevoRosario.Identity.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,6 +43,13 @@ namespace ClinicaNuevoRosario.API.Controllers
         public async Task ResetPassword([FromBody] ResetPassword resetPassword)
         {
             await _authService.ResetPassword(resetPassword);
+        }
+
+        [HttpPost(Name = "AssignRole")]
+        public async Task<ActionResult<AuthResponse>> AssignRole([FromBody] RoleUserUpdateRequest request)
+        {
+            var result = await _authService.AssignRole(request.Email, request.Role);
+            return Ok(result);
         }
     }
 }
