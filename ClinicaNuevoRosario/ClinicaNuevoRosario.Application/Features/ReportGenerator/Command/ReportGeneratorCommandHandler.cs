@@ -26,7 +26,7 @@ namespace ClinicaNuevoRosario.Application.Features.ReportGenerator.Command
             var objectSettings = new ObjectSettings
             {
                 PagesCount = true,
-                HtmlContent = TemplateGenerator.GetHTMLString(request.ReportData),
+                HtmlContent = TemplateGenerator.GetHTMLString(request.HealthInsuranceName, request.ReportData),
                 WebSettings = { DefaultEncoding = "utf-8",
                 UserStyleSheet = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "styles.css") },
                 FooterSettings = { FontName = "Arial", FontSize = 9, Right = "Página [page] de [toPage]" },

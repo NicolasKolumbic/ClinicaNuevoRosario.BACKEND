@@ -2,6 +2,7 @@
 using ClinicaNuevoRosario.Domain;
 using ClinicaNuevoRosario.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace ClinicaNuevoRosario.Infrastructure.Repositories
 {
@@ -66,7 +67,6 @@ namespace ClinicaNuevoRosario.Infrastructure.Repositories
                 .Include(x => x.Patient)
                 .ThenInclude(x => x.Plan)
                 .ThenInclude(x => x.HealthInsurance)
-                .Include(x => x.Patient.MedicalHistories)
                 .OrderByDescending(x => x.CreateDate)
                 .Include(x => x.AppointmentState)
                 .Include(x => x.ServiceType)               
@@ -74,6 +74,20 @@ namespace ClinicaNuevoRosario.Infrastructure.Repositories
                 .FirstOrDefault();
 
             return appointment;
+        }
+
+        public async Task<IQueryable<Appointment>> Filter(Expression<Func<Appointment, bool>> expression)
+        {
+            return this._context.Appointments
+                .Include(x => x.Doctor)
+                .ThenInclude(x => x.MedicalSpecialties)
+                .Include(x => x.Patient)
+                .ThenInclude(x => x.Plan)
+                .ThenInclude(x => x.HealthInsurance)
+                .OrderByDescending(x => x.CreateDate)
+                .Include(x => x.AppointmentState)
+                .Include(x => x.ServiceType)
+                .Where(expression);
         }
     }
 }

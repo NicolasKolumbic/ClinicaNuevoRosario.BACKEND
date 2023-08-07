@@ -5,7 +5,7 @@ namespace ClinicaNuevoRosario.Application.Features.ReportGenerator.Command
 {
     public static class TemplateGenerator
     {
-        public static string GetHTMLString(List<HealthInsuranceReport> reportData)
+        public static string GetHTMLString(string healthInsuranceName, List<HealthInsuranceReport> reportData)
         {
 
             var sb = new StringBuilder();
@@ -23,8 +23,8 @@ namespace ClinicaNuevoRosario.Application.Features.ReportGenerator.Command
 									</div>
 									<div class='right-content'>
 										<h2 class='mt-0'>Reporte Prestadoras</h2>
-										<p class='mt-0'>Obra Social/Prepaga: OSDE</p>
-										<p class='mt-0 mt-1'>fecha: {1}</p>
+										<p class='mt-0'>Obra Social/Prepaga: {1}</p>
+										<p class='mt-0 mt-1'>fecha: {2}</p>
 									</div>
 								</div>
                                 <table>
@@ -36,7 +36,7 @@ namespace ClinicaNuevoRosario.Application.Features.ReportGenerator.Command
                                         <th>Profesional</th>
                                         <th>Especialidad</th>
                                         <th>Tipo de Servicio</th>
-                                    </tr>", Path.Combine(Directory.GetCurrentDirectory(), "Assets", "logo.jpg"), DateTime.Now.ToShortDateString());
+                                    </tr>", Path.Combine(Directory.GetCurrentDirectory(), "Assets", "logo.jpg"), healthInsuranceName,  DateTime.Now.ToShortDateString());
 
             foreach (var row in reportData)
             {

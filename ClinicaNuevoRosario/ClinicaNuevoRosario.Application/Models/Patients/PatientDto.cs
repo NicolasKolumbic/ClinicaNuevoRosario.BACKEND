@@ -11,7 +11,6 @@ namespace ClinicaNuevoRosario.Application.Models.Pantients
         public double PhoneNumber { get; set; }
         public double IdentificationNumber { get; set; }
         public int? HealthInsurranceNumber { get; set; }
-        public HealthInsuranceDto HealthInsurance { get; set; }
         public PlanDto Plan { get; set; }
     }
 }

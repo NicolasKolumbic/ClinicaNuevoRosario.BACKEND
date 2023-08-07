@@ -1,4 +1,5 @@
 ﻿using ClinicaNuevoRosario.Domain;
+using System.Linq.Expressions;
 
 namespace ClinicaNuevoRosario.Application.Contracts.Persistence
 {
@@ -8,6 +9,8 @@ namespace ClinicaNuevoRosario.Application.Contracts.Persistence
         public Task<IQueryable<Appointment>> GetByDoctorId(int doctorId);
         public Task<IQueryable<Appointment>> GetAppointmentByHealthInsuranceId(int healthInsuranceId);
         public Task<IQueryable<Appointment>> GetByEmail(string email);
+        public Task<IQueryable<Appointment>> Filter(Expression<Func<Appointment, bool>> expression);
         public Task<Appointment> GetAppointmentById(int appointmentId);
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ClinicaNuevoRosario.Application.Behaviors;
+using ClinicaNuevoRosario.Application.Patterns.FilterBuilder;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,7 @@ namespace ClinicaNuevoRosario.Application
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddScoped(typeof(IFilterBuilder), typeof(FilterBuilder));
 
             return services;
         }

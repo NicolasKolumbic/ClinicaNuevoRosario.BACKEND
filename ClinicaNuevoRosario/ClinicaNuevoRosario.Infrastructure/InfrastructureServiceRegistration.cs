@@ -27,6 +27,7 @@ namespace ClinicaNuevoRosario.Infrastructure
             services.AddScoped<IPatientRepository, PatientRepository>();
             services.AddScoped<IHealthInsurancesRepository, HealthInsurancesRepository>();
             services.AddScoped<IPlanRepository, PlanRepository>();
+            services.AddScoped<IMedicalHistoryRepository, MedicalHistoryRepository>();
 
             return services;
         }

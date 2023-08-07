@@ -15,6 +15,7 @@ namespace ClinicaNuevoRosario.Infrastructure.Repositories
         {
             var result = _context.Patients
                 .Include(p => p.Plan)
+                .ThenInclude(p => p.HealthInsurance)
                .Where(d => d.Name.Contains(name) || d.Lastname.Contains(name));
 
             return result;

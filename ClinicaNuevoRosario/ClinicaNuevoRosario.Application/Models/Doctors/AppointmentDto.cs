@@ -11,7 +11,6 @@ namespace ClinicaNuevoRosario.Application.Models.Doctors
         public DoctorDto Doctor { get; set; }
         public HealthInsurance HealthInsurance { get; set; }
         public Patient Patient { get; set; }
-        public List<MedicalHistory>? MedicalHistories { get; set; }
         public ServiceTypes ServiceType { get; set; }
         public AppointmentStates AppointmentState { get; set; }
     }

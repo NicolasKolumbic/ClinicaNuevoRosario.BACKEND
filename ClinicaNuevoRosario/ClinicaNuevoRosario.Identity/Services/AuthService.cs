@@ -77,7 +77,7 @@ namespace ClinicaNuevoRosario.Identity.Services
                 EmailConfirmed = true,
                 Name = request.Name,
                 LastName = request.LastName,
-                UserName = request.Username
+                UserName = request.Username,
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
@@ -85,7 +85,7 @@ namespace ClinicaNuevoRosario.Identity.Services
 
             if (result.Succeeded)
             {  
-                await _userManager.AddToRoleAsync(user, "Básico");
+                await _userManager.AddToRoleAsync(user, "VISITANTE");
                 return new RegistrationResponse
                 {
                     Email = user.Email,

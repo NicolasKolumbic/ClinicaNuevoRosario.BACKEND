@@ -4,6 +4,7 @@ using ClinicaNuevoRosario.Application.Features.Appointments.Commands.UpdateAppoi
 using ClinicaNuevoRosario.Application.Features.Doctors.Commands.UpdateDoctor;
 using ClinicaNuevoRosario.Application.Features.Patients.Command.AddPatient;
 using ClinicaNuevoRosario.Application.Models.Doctors;
+using ClinicaNuevoRosario.Application.Models.MedicalHistories;
 using ClinicaNuevoRosario.Application.Models.Pantients;
 using ClinicaNuevoRosario.Domain;
 
@@ -60,6 +61,11 @@ namespace ClinicaNuevoRosario.Application.Mappings
                 .ForMember(x => x.MedicalSpecialtyId, x => x.MapFrom(s => s.Id));
             CreateMap<MedicalSpecialtyDto, MedicalSpecialty>()
                .ForMember(x => x.Id, x => x.MapFrom(s => s.MedicalSpecialtyId));
+            CreateMap<MedicalHistoryDto, MedicalHistory>()
+              .ForMember(x => x.MedicalHistoryId, x => x.MapFrom(s => s.MedicalHistoryId));
+            CreateMap<MedicalHistory, MedicalHistoryDto>()
+             .ForMember(x => x.MedicalHistoryId, x => x.MapFrom(s => s.MedicalHistoryId))
+             .ForMember(x => x.CreatedDate, x => x.MapFrom(x => x.CreateDate.Value.ToString("MM/dd/yyyy hh:mm tt")));
         }
     }
 }

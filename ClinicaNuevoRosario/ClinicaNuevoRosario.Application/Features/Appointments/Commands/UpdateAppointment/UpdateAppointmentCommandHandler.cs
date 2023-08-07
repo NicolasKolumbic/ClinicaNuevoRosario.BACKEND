@@ -11,12 +11,19 @@ namespace ClinicaNuevoRosario.Application.Features.Appointments.Commands.UpdateA
     public class UpdateAppointmentCommandHandler : IRequestHandler<UpdateAppointmentCommand, int>
     {
         private readonly IAppointmentRepository _appointmentRepository;
+        private readonly IMedicalHistoryRepository _medicalHistoryRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<UpdateAppointmentCommandHandler> _logger;
 
-        public UpdateAppointmentCommandHandler(IAppointmentRepository appointmentRepository, IMapper mapper, ILogger<UpdateAppointmentCommandHandler> logger)
+        public UpdateAppointmentCommandHandler(
+            IAppointmentRepository appointmentRepository,
+            IMedicalHistoryRepository medicalHistoryRepository,
+            IMapper mapper,
+            ILogger<UpdateAppointmentCommandHandler> logger
+            )
         {
             _appointmentRepository = appointmentRepository;
+            _medicalHistoryRepository = medicalHistoryRepository;
             _mapper = mapper;
             _logger = logger;
         }
@@ -33,7 +40,9 @@ namespace ClinicaNuevoRosario.Application.Features.Appointments.Commands.UpdateA
             {
                 var medicalHistory = new MedicalHistory();
                 medicalHistory.Comments = request.MedicalHistoryComment;
-                appointment.Patient.MedicalHistories.Add(medicalHistory);
+                medicalHistory.Doctor = appointment.Doctor;
+                medicalHistory.Patient = appointment.Patient;
+                await this._medicalHistoryRepository.AddAsync(medicalHistory);
             }
            
             appointment.AppointmentStateId = (int)request.AppointmentState;

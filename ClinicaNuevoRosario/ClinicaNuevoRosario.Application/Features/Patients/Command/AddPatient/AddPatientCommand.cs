@@ -11,6 +11,7 @@ namespace ClinicaNuevoRosario.Application.Features.Patients.Command.AddPatient
         public string Email { get; set; }
         public double PhoneNumber { get; set; }
         public double IdentificationNumber { get; set; }
+        public int? HealthInsurranceNumber { get; set; }
         public HealthInsuranceDto HealthInsurance { get; set; }
         public PlanDto Plan { get; set; }
     }

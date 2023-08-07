@@ -1,6 +1,7 @@
 ﻿using ClinicaNuevoRosario.Application.Features.Appointments.Commands.AddAppointment;
 using ClinicaNuevoRosario.Application.Features.Appointments.Commands.DeleteAppointment;
 using ClinicaNuevoRosario.Application.Features.Appointments.Commands.UpdateAppointment;
+using ClinicaNuevoRosario.Application.Features.Appointments.Queries.AppointmentsFilter;
 using ClinicaNuevoRosario.Application.Features.Appointments.Queries.GetAllAppointments;
 using ClinicaNuevoRosario.Application.Features.Appointments.Queries.GetAppointmentById;
 using ClinicaNuevoRosario.Application.Features.Appointments.Queries.GetAppointmentsByDoctor;
@@ -100,7 +101,7 @@ namespace ClinicaNuevoRosario.API.Controllers
         }
 
         [HttpGet(Name = "GetAllAppointments")]
-        [Authorize(Roles = "Medico,Administrativo,Contable")]
+        [Authorize(Roles = "Medico,Administrativo,Contable,Administrador")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<List<AppointmentDto>>> GetAllAppointments()
         {
@@ -115,6 +116,14 @@ namespace ClinicaNuevoRosario.API.Controllers
         {
             var file = await _mediator.Send(command);
             return File(file, "application/pdf");
+        }
+
+        [HttpPost(Name = "AppointmentsFilter")]
+        [Authorize(Roles = "Contable,Administrador")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult<List<AppointmentDto>>> AppointmentsFilter([FromBody] AppointmentsFilterQuery query)
+        {
+            return await _mediator.Send(query);
         }
 
     }

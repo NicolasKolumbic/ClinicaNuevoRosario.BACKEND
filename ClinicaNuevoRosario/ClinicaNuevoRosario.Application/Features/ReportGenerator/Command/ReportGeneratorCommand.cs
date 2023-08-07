@@ -8,5 +8,7 @@ namespace ClinicaNuevoRosario.Application.Features.ReportGenerator.Command
         public string FileTitle { get; set; }
         public List<HealthInsuranceReport> ReportData { get; set; }
 
+        public string HealthInsuranceName { get; set; }
+
     }
 }
