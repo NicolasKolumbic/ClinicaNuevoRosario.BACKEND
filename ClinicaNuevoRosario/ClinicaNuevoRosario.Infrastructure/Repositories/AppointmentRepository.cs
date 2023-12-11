@@ -1,4 +1,5 @@
 ﻿using ClinicaNuevoRosario.Application.Contracts.Persistence;
+using ClinicaNuevoRosario.Application.Helpers;
 using ClinicaNuevoRosario.Domain;
 using ClinicaNuevoRosario.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,22 @@ namespace ClinicaNuevoRosario.Infrastructure.Repositories
     {
         public AppointmentRepository(CNRDBContext context) : base(context)
         {
+
+        }
+
+        public async Task<IQueryable<Appointment>> GetAssignedAppointmentByDoctor(int doctorId)
+        {
+            var appointments = this._context.Appointments
+                .Include(x => x.Patient)
+                .Include(x => x.AppointmentState)
+                .Include(x => x.ServiceType)
+                .Include(x => x.Doctor)
+                .Where(x => x.DoctorId == doctorId &&
+                            x.AppointmentStateId == (int)AppointmentStates.Assigned &&
+                            x.Time >= DateTime.Now
+                      );
+
+            return appointments.AsQueryable();
         }
 
         public async Task<IQueryable<Appointment>> GetAllApointments()

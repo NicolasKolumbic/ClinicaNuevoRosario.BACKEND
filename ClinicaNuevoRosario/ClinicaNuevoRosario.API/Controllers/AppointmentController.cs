@@ -2,6 +2,7 @@
 using ClinicaNuevoRosario.Application.Features.Appointments.Commands.DeleteAppointment;
 using ClinicaNuevoRosario.Application.Features.Appointments.Commands.UpdateAppointment;
 using ClinicaNuevoRosario.Application.Features.Appointments.Queries.AppointmentsFilter;
+using ClinicaNuevoRosario.Application.Features.Appointments.Queries.GeAvailableAppointmentsByDoctorId;
 using ClinicaNuevoRosario.Application.Features.Appointments.Queries.GetAllAppointments;
 using ClinicaNuevoRosario.Application.Features.Appointments.Queries.GetAppointmentById;
 using ClinicaNuevoRosario.Application.Features.Appointments.Queries.GetAppointmentsByDoctor;
@@ -125,6 +126,17 @@ namespace ClinicaNuevoRosario.API.Controllers
         {
             return await _mediator.Send(query);
         }
+
+        
+        [HttpGet(Name = "GetAssignedAppointmentByDoctorId")]
+        [Authorize(Roles = "Administrativo,Medico")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult<List<AppointmentDto>>> GetAssignedAppointmentByDoctorId(int doctorId)
+        {
+            var query = new GetAssignedAppointmentByDoctorIdQuery() { DoctorId = doctorId };
+            return await _mediator.Send(query);
+        }
+
 
     }
 }

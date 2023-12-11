@@ -6,6 +6,10 @@ using ClinicaNuevoRosario.Infrastructure;
 using DinkToPdf.Contracts;
 using DinkToPdf;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Configuration;
+using ClinicaNuevoRosario.Application.Models;
+using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 

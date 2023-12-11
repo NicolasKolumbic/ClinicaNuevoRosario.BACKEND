@@ -21,4 +21,8 @@
     <ProjectReference Include="..\ClinicaNuevoRosario.Infrastructure\ClinicaNuevoRosario.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Assets\backups\" />
+  </ItemGroup>
+
 </Project>

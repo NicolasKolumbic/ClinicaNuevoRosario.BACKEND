@@ -1,6 +1,7 @@
 ﻿using ClinicaNuevoRosario.Application.Contracts.External;
 using ClinicaNuevoRosario.Application.Contracts.Persistence;
 using ClinicaNuevoRosario.Application.Models;
+using ClinicaNuevoRosario.Infrastructure.Administrator;
 using ClinicaNuevoRosario.Infrastructure.Email;
 using ClinicaNuevoRosario.Infrastructure.Persistence;
 using ClinicaNuevoRosario.Infrastructure.Repositories;
@@ -13,12 +14,14 @@ namespace ClinicaNuevoRosario.Infrastructure
     public static class InfrastructureServiceRegistration
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
-        {
+        {       
             services.AddDbContext<CNRDBContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
 
             services.Configure<EmailSettings>(c => configuration.GetSection("EmailSetting"));
+            services.Configure<SQLServerPath>(c =>  c.SqlServerBasePath = configuration.GetSection("SqlServerBasePath").Value);
+            services.Configure<ConnectionString>(c => c.DefaultConnection = configuration.GetConnectionString("DefaultConnection"));
 
             services.AddTransient<IEmailService, EmailService>();
             services.AddScoped<IDoctorRepository, DoctorRepository>();
@@ -28,6 +31,7 @@ namespace ClinicaNuevoRosario.Infrastructure
             services.AddScoped<IHealthInsurancesRepository, HealthInsurancesRepository>();
             services.AddScoped<IPlanRepository, PlanRepository>();
             services.AddScoped<IMedicalHistoryRepository, MedicalHistoryRepository>();
+            services.AddScoped<IAdministratorRepository, AdministratorRepository>();
 
             return services;
         }

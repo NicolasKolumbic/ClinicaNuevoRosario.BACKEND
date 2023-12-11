@@ -20,7 +20,7 @@ namespace ClinicaNuevoRosario.API.Controllers
         }
 
         [HttpGet(Name = "GetUsersChat")]
-        [Authorize(Roles = "Medico,Contable,Administrativo")]
+        [Authorize(Roles = "Medico,Contable,Administrativo,Administrador")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<List<UserChat>>> GetUsersChat()
         {

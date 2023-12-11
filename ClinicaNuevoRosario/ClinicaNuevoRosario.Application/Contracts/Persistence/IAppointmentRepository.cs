@@ -11,6 +11,7 @@ namespace ClinicaNuevoRosario.Application.Contracts.Persistence
         public Task<IQueryable<Appointment>> GetByEmail(string email);
         public Task<IQueryable<Appointment>> Filter(Expression<Func<Appointment, bool>> expression);
         public Task<Appointment> GetAppointmentById(int appointmentId);
+        public Task<IQueryable<Appointment>> GetAssignedAppointmentByDoctor(int doctorId);
 
     }
 }
